@@ -62,35 +62,48 @@ const service = ({ strapi }) => ({
     },
     async confirmPayment(orderId) {
         const authorization = `Basic ${strapi.config.get('server.app.API_YOOKASSA_URL')}`;
-        console.log(orderId, 'id');
-        console.log(authorization, 'authorization');
+
         try {
-            const responsePayment = await fetch(
-                `https://api.yookassa.ru/v3/payments/${orderId}/capture`,
-                {
-                    method: 'POST',
-                    headers: {
-                        Authorization: authorization,
-                        'Idempotence-Key': crypto.randomUUID(),
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({}),
-                }
-            );
-
-            const responsePaymentData = await responsePayment.json();
-            console.log('Payment confirmed:', responsePaymentData.id);
-
-            return {
-                message: 'Payment confirmed and order status updated',
-                order: responseOrderData,
-                payment: responsePaymentData,
-            };
-        } catch (err) {
-            throw new Error(400, {
-                message: 'Error in confirming payment',
-                details: err.message,
+            const response = await fetch(`https://api.yookassa.ru/v3/payments/${orderId}/capture`, {
+                method: 'POST',
+                headers: {
+                    Authorization: authorization,
+                    'Idempotence-Key': crypto.randomUUID(),
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({}),
             });
+
+            if (!response.ok) {
+                throw new Error(
+                    `Failed to capture payment: ${response.statusText} (${response.status})`
+                );
+            }
+
+            const paymentData = await response.json();
+
+            if (!paymentData || !paymentData.id) {
+                return {
+                    status: 400,
+                    message: 'Invalid response from payment gateway.',
+                };
+            }
+
+            strapi.log.info(
+                `Payment confirmed for Order ID: ${orderId}, Payment ID: ${paymentData.id}`
+            );
+            return {
+                status: 200,
+                message: 'Payment confirmed and order status updated.',
+            };
+        } catch (error) {
+            strapi.log.error(
+                `Error confirming payment for Order ID: ${orderId} - ${error.message}`
+            );
+            return {
+                status: 500,
+                message: 'Internal server error during payment confirmation.',
+            };
         }
     },
     async cancelPayment(order_id) {

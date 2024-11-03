@@ -1,5 +1,23 @@
 "use strict";
 
+async function processOrderStatus(paymentId, status) {
+    const order = await strapi.documents("api::order.order").findFirst({
+        filters: { orderId: paymentId },
+    });
+
+    if (order) {
+        await strapi.documents("api::order.order").update({
+            documentId: order.documentId,
+            data: { orderStatus: status },
+        });
+        strapi.log.info(
+            `Статус заказа обновлен на '${status}' для заказа с ID: ${order.orderId}`,
+        );
+    } else {
+        throw new Error(`Заказ не найден для платежа с ID: ${paymentId}`);
+    }
+}
+
 const { createCoreController } = require("@strapi/strapi").factories;
 
 module.exports = createCoreController("api::order.order", ({ strapi }) => ({
@@ -56,87 +74,54 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
         }
     },
     async handleNotifications(ctx) {
-        let notificationInfo = ctx.request.body;
+        const { event, object } = ctx.request.body;
 
-        console.log(notificationInfo.event, "yookassa webhook notification");
-        console.log(notificationInfo.object.paid, "paid");
-
-        if (notificationInfo.event === "payment.waiting_for_capture") {
-            try {
-                const order = await strapi
-                    .documents("api::order.order")
-                    .findFirst({
-                        filters: {
-                            orderId: {
-                                $eq: notificationInfo.object.id,
-                            },
-                        },
-                    });
-
-                const updatedOrder = await strapi
-                    .documents("api::order.order")
-                    .update({
-                        documentId: order.documentId,
-                        data: {
-                            orderStatus: "Оплачен",
-                        },
-                    });
-
-                const req = await strapi
-                    .plugin("yookassa-payment")
-                    .service("service")
-                    .confirmPayment(notificationInfo.object.id);
-
-                // Устанавливаем статус ответа HTTP 200
-                ctx.status = 200;
-                ctx.body = ""; // Пустое тело
-                return;
-            } catch (err) {
-                console.log(err);
-                ctx.throw(500, err);
-            }
-        } else if (notificationInfo.event === "payment.canceled") {
-            try {
-                const order = await strapi
-                    .documents("api::order.order")
-                    .findFirst({
-                        filters: {
-                            orderId: {
-                                $eq: notificationInfo.object.id,
-                            },
-                        },
-                    });
-
-                const updatedOrder = await strapi
-                    .documents("api::order.order")
-                    .update({
-                        documentId: order.documentId,
-                        data: {
-                            orderStatus: "Отменен",
-                        },
-                    });
-
-                const req = await strapi
-                    .plugin("yookassa-payment")
-                    .service("service")
-                    .cancelPayment(notificationInfo.object.id);
-
-                ctx.status = 200;
-                ctx.body = "";
-                return;
-            } catch (err) {
-                console.log(err);
-                ctx.throw(500, err);
-            }
-        } else if (notificationInfo.event === "payment.succeeded") {
-            console.log("PAYMENT RECEIVED", notificationInfo.object.id);
-            ctx.status = 200;
-            ctx.body = "";
-            return;
+        if (!event || !object || !object.id) {
+            strapi.log.warn("Получен некорректный формат уведомления.");
+            return ctx.badRequest("Некорректный формат уведомления");
         }
 
-        // Обработка неизвестных событий с кодом 200, если нужно
-        ctx.status = 200;
-        ctx.body = "";
+        strapi.log.info(
+            `Получено событие Yookassa: ${event} для платежа с ID: ${object.id}`,
+        );
+
+        try {
+            switch (event) {
+                case "payment.waiting_for_capture":
+                    await processOrderStatus(object.id, "Оплачен");
+                    await strapi
+                        .plugin("yookassa-payment")
+                        .service("service")
+                        .confirmPayment(object.id);
+                    break;
+
+                case "payment.canceled":
+                    await processOrderStatus(object.id, "Отменен");
+                    await strapi
+                        .plugin("yookassa-payment")
+                        .service("service")
+                        .cancelPayment(object.id);
+                    break;
+
+                case "payment.succeeded":
+                    strapi.log.info(
+                        `Платеж успешно завершен для ID: ${object.id}`,
+                    );
+                    break;
+
+                default:
+                    strapi.log.warn(`Необработанный тип события: ${event}`);
+                    break;
+            }
+
+            return ctx.send("", 200);
+        } catch (err) {
+            strapi.log.error(
+                `Ошибка при обработке уведомления Yookassa: ${err.message}`,
+            );
+            return ctx.internalServerError(
+                "Внутренняя ошибка сервера при обработке уведомления",
+            );
+        }
     },
 }));
