@@ -87,11 +87,10 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
                     .service("service")
                     .confirmPayment(notificationInfo.object.id);
 
-                return {
-                    order: updatedOrder,
-                    message: "Payment confirmed and processed",
-                    status: 200,
-                };
+                // Устанавливаем статус ответа HTTP 200
+                ctx.status = 200;
+                ctx.body = ""; // Пустое тело
+                return;
             } catch (err) {
                 console.log(err);
                 ctx.throw(500, err);
@@ -122,16 +121,22 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
                     .service("service")
                     .cancelPayment(notificationInfo.object.id);
 
-                return {
-                    message: "Payment cancelled",
-                    status: 200,
-                };
+                ctx.status = 200;
+                ctx.body = "";
+                return;
             } catch (err) {
                 console.log(err);
                 ctx.throw(500, err);
             }
         } else if (notificationInfo.event === "payment.succeeded") {
-            console.log('PAYMENT RECEIVED', notificationInfo.object.id)
+            console.log("PAYMENT RECEIVED", notificationInfo.object.id);
+            ctx.status = 200;
+            ctx.body = "";
+            return;
         }
+
+        // Обработка неизвестных событий с кодом 200, если нужно
+        ctx.status = 200;
+        ctx.body = "";
     },
 }));
