@@ -51,3 +51,4 @@ jobs:
           app: 'strapi-app'
           token: ${{ secrets.APP_TOKEN }}
           image: 'ghcr.io/your-username/strapi-app:latest'
+ 
