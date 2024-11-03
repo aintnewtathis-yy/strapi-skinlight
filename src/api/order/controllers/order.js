@@ -59,6 +59,7 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
         let notificationInfo = ctx.request.body;
 
         console.log(notificationInfo.event, "yookassa webhook notification");
+        console.log(notificationInfo.object.paid, "paid");
 
         if (notificationInfo.event === "payment.waiting_for_capture") {
             try {
