@@ -1,0 +1,19 @@
+{
+  "kind": "singleType",
+  "collectionName": "global_settings_pages",
+  "info": {
+    "singularName": "global-settings-page",
+    "pluralName": "global-settings-pages",
+    "displayName": "Глобальные настройки",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "exchangeRate": {
+      "type": "integer"
+    }
+  }
+}

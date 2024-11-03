@@ -1,0 +1,43 @@
+{
+  "version": "0.0.0",
+  "keywords": [],
+  "type": "commonjs",
+  "exports": {
+    "./package.json": "./package.json",
+    "./strapi-server": {
+      "source": "./server/src/index.js",
+      "import": "./dist/server/index.mjs",
+      "require": "./dist/server/index.js",
+      "default": "./dist/server/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "strapi-plugin build",
+    "watch": "strapi-plugin watch",
+    "watch:link": "strapi-plugin watch:link",
+    "verify": "strapi-plugin verify"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@strapi/strapi": "^5.2.0",
+    "@strapi/sdk-plugin": "^5.2.7",
+    "prettier": "^3.3.3"
+  },
+  "peerDependencies": {
+    "@strapi/strapi": "^5.2.0",
+    "@strapi/sdk-plugin": "^5.2.7"
+  },
+  "strapi": {
+    "kind": "plugin",
+    "name": "yookassa-payment",
+    "displayName": "Yookassa payment",
+    "description": "custom plugin for yookassa payment provider"
+  },
+  "name": "yookassa-payment",
+  "description": "custom plugin for yookassa payment provider",
+  "license": "MIT",
+  "author": "aintnewtathis-yy <aintnewtathis@mail.ru>"
+}

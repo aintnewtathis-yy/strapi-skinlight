@@ -1,0 +1,15 @@
+{
+  "collectionName": "components_components_base_label_with_booleans",
+  "info": {
+    "displayName": "labelWithBoolean"
+  },
+  "options": {},
+  "attributes": {
+    "label": {
+      "type": "string"
+    },
+    "boolean": {
+      "type": "boolean"
+    }
+  }
+}

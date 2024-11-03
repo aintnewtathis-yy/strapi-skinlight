@@ -1,0 +1,31 @@
+{
+  "collectionName": "components_components_skin_type2s",
+  "info": {
+    "displayName": "skinType",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "all": {
+      "type": "boolean"
+    },
+    "fat": {
+      "type": "boolean"
+    },
+    "combined": {
+      "type": "boolean"
+    },
+    "normal": {
+      "type": "boolean"
+    },
+    "dehydrated": {
+      "type": "boolean"
+    },
+    "dry": {
+      "type": "boolean"
+    },
+    "sensitive": {
+      "type": "boolean"
+    }
+  }
+}

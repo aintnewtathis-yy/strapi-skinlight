@@ -1,0 +1,51 @@
+{
+  "version": "0.0.0",
+  "keywords": [],
+  "type": "commonjs",
+  "exports": {
+    "./package.json": "./package.json",
+    "./strapi-server": {
+      "source": "./server/src/index.js",
+      "import": "./dist/server/index.mjs",
+      "require": "./dist/server/index.js",
+      "default": "./dist/server/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "strapi-plugin build",
+    "watch": "strapi-plugin watch",
+    "watch:link": "strapi-plugin watch:link",
+    "verify": "strapi-plugin verify"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@strapi/strapi": "^5.0.6",
+    "@strapi/sdk-plugin": "^5.2.7",
+    "prettier": "^3.3.3"
+  },
+  "peerDependencies": {
+    "@strapi/strapi": "^5.0.6",
+    "@strapi/sdk-plugin": "^5.2.7"
+  },
+  "strapi": {
+    "kind": "plugin",
+    "name": "import-data",
+    "displayName": "import-data",
+    "description": "import-data"
+  },
+  "name": "import-data",
+  "description": "import-data",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com//aintnewtathis-yy.git"
+  },
+  "bugs": {
+    "url": "https://github.com//aintnewtathis-yy/issues"
+  },
+  "homepage": "https://github.com//aintnewtathis-yy#readme",
+  "author": "aintnewtathis-yy <aintnewtathis@mail.ru>"
+}
