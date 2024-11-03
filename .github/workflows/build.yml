@@ -19,8 +19,21 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Install Dependencies
+      - name: Install Main Dependencies
         run: npm ci
+
+      # Install and build each plugin
+      - name: Install and Build Import-Data Plugin
+        working-directory: src/plugins/import-data
+        run: |
+          npm install
+          npm run build
+
+      - name: Install and Build Yookassa-Payment Plugin
+        working-directory: src/plugins/yookassa-payment
+        run: |
+          npm install
+          npm run build
 
       - name: Build Strapi
         run: npm run build
@@ -34,7 +47,7 @@ jobs:
       - name: Deploy on CapRover
         uses: caprover/deploy-from-github@v1.1.2
         with:
-          server: ${{ secrets.CAPROVER_SERVER }}
-          app: 'strapi-core'
+          server: https://your-caprover-server-url.com
+          app: 'strapi-app'
           token: ${{ secrets.APP_TOKEN }}
-          image: 'ghcr.io/aintnewtathis-yy/strapi-skinlight:latest'
+          image: 'ghcr.io/your-username/strapi-app:latest'

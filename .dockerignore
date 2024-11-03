@@ -4,3 +4,5 @@
 build/
 node_modules/
 data/
+src/plugins/import-data/node_modules/
+src/plugins/yookassa-payment/node_modules/

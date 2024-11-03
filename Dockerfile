@@ -1,25 +1,37 @@
 FROM node:20
 
-# Install dependencies
+# Install dependencies for Sharp
 RUN apt-get update && apt-get install -y libvips-dev
 
-# Set up work directory
+# Set the working directory
 WORKDIR /opt/app
 
-# Copy package.json and package-lock.json
+# Copy the package.json and package-lock.json to install dependencies
 COPY ./package.json ./package-lock.json ./
 
-# Install dependencies
+# Install main app dependencies
 RUN npm install
 
-# Copy the app code
+# Install and build each custom plugin
+WORKDIR /opt/app/src/plugins/import-data
+RUN npm install && npm run build
+
+WORKDIR /opt/app/src/plugins/yookassa-payment
+RUN npm install && npm run build
+
+# Copy the entire app code to the container
+WORKDIR /opt/app
 COPY . .
 
-# Build the application
+# Build the Strapi application
 RUN npm run build
 
-# Expose port
+# Expose the app port (default: 1337)
 EXPOSE 1337
 
-# Command to run the server
+# Set default environment variables (can be configured in CapRover)
+ENV HOST=0.0.0.0
+ENV PORT=1337
+
+# Start the server
 CMD ["npm", "run", "start"]
