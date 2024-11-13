@@ -1,10 +1,11 @@
 const service = ({ strapi }) => ({
     async initialPayment(ctx) {
+        const { paymentData } = ctx.request.body;
+
         const authorization = `Basic ${strapi.config.get('server.app.API_YOOKASSA_URL')}`;
         const paymentMessage = 'Списываем оплату за заказ';
-        const successUrl = '/success';
+        const successUrl = `http://localhost:5173/order/${paymentData.documentId}`;
 
-        const { paymentData } = ctx.request.body;
         try {
             const url = 'https://api.yookassa.ru/v3/payments';
 

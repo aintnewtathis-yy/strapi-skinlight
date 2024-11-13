@@ -10,5 +10,10 @@ module.exports = {
       path: "/handleNotifications", 
       handler: "order.handleNotifications",
     },
+    {
+      method: "POST",
+      path: "/sendFormMessageToAdmin", 
+      handler: "order.sendFormMessageToAdmin",
+    },
   ],
 };

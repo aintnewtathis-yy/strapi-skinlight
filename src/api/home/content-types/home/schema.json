@@ -1,0 +1,36 @@
+{
+  "kind": "singleType",
+  "collectionName": "home_plural",
+  "info": {
+    "singularName": "home",
+    "pluralName": "home-plural",
+    "displayName": "Главная",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "shownLine": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::line.line"
+    },
+    "heroSlider": {
+      "type": "component",
+      "repeatable": true,
+      "component": "components.hero-slider"
+    },
+    "heroAbout": {
+      "type": "component",
+      "repeatable": false,
+      "component": "components-home.home-about"
+    },
+    "homeBrands": {
+      "type": "component",
+      "repeatable": true,
+      "component": "components-home.home-brands"
+    }
+  }
+}

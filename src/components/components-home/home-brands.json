@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_components_home_home_brands",
+  "info": {
+    "displayName": "homeBrands"
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "href": {
+      "type": "string"
+    },
+    "image": {
+      "allowedTypes": [
+        "images"
+      ],
+      "type": "media",
+      "multiple": false
+    }
+  }
+}

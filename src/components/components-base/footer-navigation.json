@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_components_base_footer_navigations",
+  "info": {
+    "displayName": "footerNavigation",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "footerColumn": {
+      "displayName": "footerColumn",
+      "type": "component",
+      "repeatable": true,
+      "component": "components-base.footer-column"
+    },
+    "footerSocials": {
+      "displayName": "footerSocials",
+      "type": "component",
+      "repeatable": false,
+      "component": "components-base.footer-socials"
+    }
+  }
+}

@@ -4,7 +4,8 @@
   "info": {
     "singularName": "brand",
     "pluralName": "brands",
-    "displayName": "Бренды"
+    "displayName": "Бренды",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -27,6 +28,28 @@
       "type": "component",
       "repeatable": false,
       "component": "components.seo"
+    },
+    "lines": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::line.line",
+      "mappedBy": "brand"
+    },
+    "brandHero": {
+      "type": "component",
+      "repeatable": false,
+      "component": "brand-components.brand-hero"
+    },
+    "brandAbout": {
+      "type": "component",
+      "repeatable": false,
+      "component": "brand-components.brand-about"
+    },
+    "shownLine": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::line.line",
+      "inversedBy": "shownOnBrand"
     }
   }
 }

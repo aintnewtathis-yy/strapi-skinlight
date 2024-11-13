@@ -1,0 +1,25 @@
+{
+  "collectionName": "components_components_timetable_entities",
+  "info": {
+    "displayName": "timetableEntity",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "level": {
+      "type": "string"
+    },
+    "price": {
+      "type": "string"
+    },
+    "date": {
+      "type": "datetime"
+    },
+    "href": {
+      "type": "string"
+    }
+  }
+}

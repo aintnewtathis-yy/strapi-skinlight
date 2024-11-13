@@ -12,7 +12,28 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "exchangeRate": {
+    "exchangeRate_ella": {
+      "type": "integer"
+    },
+    "exchangeRateOpt_ella": {
+      "type": "integer"
+    },
+    "exchangeRate_pandhys": {
+      "type": "integer"
+    },
+    "exchangeRateOpt_pandhys": {
+      "type": "integer"
+    },
+    "exchangeRate_valmi": {
+      "type": "integer"
+    },
+    "exchangeRateOpt_valmi": {
+      "type": "integer"
+    },
+    "exchangeRate_perron": {
+      "type": "integer"
+    },
+    "exchangeRateOpt_perron": {
       "type": "integer"
     }
   }

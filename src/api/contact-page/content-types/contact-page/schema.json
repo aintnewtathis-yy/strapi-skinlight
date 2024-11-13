@@ -1,0 +1,26 @@
+{
+  "kind": "singleType",
+  "collectionName": "contact_page_plural",
+  "info": {
+    "singularName": "contact-page",
+    "pluralName": "contact-page-plural",
+    "displayName": "Контакты"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "contactsBlock": {
+      "type": "component",
+      "repeatable": true,
+      "component": "components-contacts.contacts-block"
+    }
+  }
+}

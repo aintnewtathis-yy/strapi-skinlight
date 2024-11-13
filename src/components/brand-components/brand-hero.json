@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_brand_components_brand_heroes",
+  "info": {
+    "displayName": "brandHero"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "image": {
+      "allowedTypes": [
+        "images"
+      ],
+      "type": "media",
+      "multiple": false
+    }
+  }
+}

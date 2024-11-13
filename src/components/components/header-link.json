@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_components_header_links",
+  "info": {
+    "displayName": "headerLink",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "label": {
+      "type": "string"
+    },
+    "href": {
+      "type": "string"
+    }
+  }
+}

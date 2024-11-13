@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_components_base_footer_socials",
+  "info": {
+    "displayName": "footerSocials",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "text": {
+      "type": "string"
+    },
+    "link": {
+      "type": "component",
+      "repeatable": true,
+      "component": "components-base.link"
+    }
+  }
+}

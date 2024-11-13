@@ -1,0 +1,26 @@
+{
+  "kind": "singleType",
+  "collectionName": "navigation_plural",
+  "info": {
+    "singularName": "navigation",
+    "pluralName": "navigation-plural",
+    "displayName": "Навигация",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "headerLink": {
+      "type": "component",
+      "repeatable": true,
+      "component": "components-base.link"
+    },
+    "footerNavigation": {
+      "type": "component",
+      "repeatable": false,
+      "component": "components-base.footer-navigation"
+    }
+  }
+}

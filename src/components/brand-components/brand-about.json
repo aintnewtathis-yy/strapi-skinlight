@@ -1,0 +1,30 @@
+{
+  "collectionName": "components_brand_components_brand_abouts",
+  "info": {
+    "displayName": "brandAbout",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "miniTitle": {
+      "type": "string"
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "descriptionTitle": {
+      "type": "text"
+    },
+    "descriptionText": {
+      "type": "richtext"
+    }
+  }
+}

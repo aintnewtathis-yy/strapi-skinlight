@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "distributors_plural",
+  "info": {
+    "singularName": "distributors",
+    "pluralName": "distributors-plural",
+    "displayName": "Дистрибьюторы"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "representative": {
+      "type": "string"
+    },
+    "town": {
+      "type": "string"
+    },
+    "contacts": {
+      "type": "richtext"
+    },
+    "socials": {
+      "type": "richtext"
+    },
+    "brands": {
+      "type": "richtext"
+    }
+  }
+}

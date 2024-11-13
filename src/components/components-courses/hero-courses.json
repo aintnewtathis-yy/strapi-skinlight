@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_components_courses_hero_courses",
+  "info": {
+    "displayName": "heroCourses"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "image": {
+      "allowedTypes": [
+        "images"
+      ],
+      "type": "media",
+      "multiple": false
+    }
+  }
+}

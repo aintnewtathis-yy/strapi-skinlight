@@ -39,6 +39,18 @@
     },
     "address": {
       "type": "string"
+    },
+    "email": {
+      "type": "email"
+    },
+    "firstName": {
+      "type": "string"
+    },
+    "secondName": {
+      "type": "string"
+    },
+    "phone": {
+      "type": "string"
     }
   }
 }

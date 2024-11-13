@@ -6,13 +6,17 @@ async function processOrderStatus(paymentId, status) {
     });
 
     if (order) {
-        await strapi.documents("api::order.order").update({
+        const updatedOrder = await strapi.documents("api::order.order").update({
             documentId: order.documentId,
             data: { orderStatus: status },
+            status: "published",
+            populate: ["products", "products.product"],
         });
         strapi.log.info(
             `Статус заказа обновлен на '${status}' для заказа с ID: ${order.orderId}`,
         );
+
+        return updatedOrder;
     } else {
         throw new Error(`Заказ не найден для платежа с ID: ${paymentId}`);
     }
@@ -28,15 +32,21 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
             //создаем заказ с данными из корзины
             const order = await strapi.documents("api::order.order").create({
                 data: {
-                    orderStatus: data.orderStatus,
+                    orderStatus: "Ожидается оплата",
                     total: data.total,
                     orderId: data.orderId,
                     products: data.products,
                     address: data.userData.address,
                     user: data.userDocumentId,
+                    firstName: data.userData.firstName,
+                    secondName: data.userData.secondName,
+                    email: data.userData.email,
+                    phone: data.userData.phone,
                 },
                 status: "published",
             });
+
+            console.log(order);
 
             //получаем ссылку на оплату и id заказа от юкассы
             const paymentDetails = await strapi
@@ -47,6 +57,7 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
                         body: {
                             paymentData: {
                                 total: order.total,
+                                documentId: order.documentId,
                             },
                         },
                     },
@@ -63,7 +74,10 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
                     documentId: order.documentId,
                     data: { orderId: paymentDetails.id },
                     status: "published",
+                    populate: ["products", "products.product"],
                 });
+
+            console.log(updatedOrder);
 
             return {
                 url: paymentDetails.url,
@@ -88,7 +102,73 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
         try {
             switch (event) {
                 case "payment.waiting_for_capture":
-                    await processOrderStatus(object.id, "Оплачен");
+                    const updatedOrder = await processOrderStatus(
+                        object.id,
+                        "Оплачен",
+                    );
+                    console.log("payment.waiting_for_capture");
+                    const adminEmail = await strapi
+                        .plugin("email")
+                        .service("email")
+                        .send({
+                            to: "vyshyvanovilya@gmail.com",
+                            from: "1loso@mail.ru",
+                            subject: "Новый заказ",
+                            text: "Новый заказ",
+                            html: `
+                    <div style="font-family: Arial, sans-serif; color: #333; padding: 20px; max-width: 800px; margin: auto;">
+                        <h4 style="font-size: 18px; color: #555; margin-bottom: 20px;">Новое обращение:</h4>
+                        <table style="width: 100%; border-collapse: collapse; border: 1px solid #ddd; background-color: #f9f9f9;">
+                            <tr>
+                                <td style="padding: 10px; font-size: 16px; border-bottom: 1px solid #ddd;"><strong>Номер заказа:</strong></td>
+                                <td style="padding: 10px; font-size: 16px; border-bottom: 1px solid #ddd;">${updatedOrder.orderId}</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 10px; font-size: 16px; border-bottom: 1px solid #ddd;"><strong>Имя и телефон покупателя:</strong></td>
+                                <td style="padding: 10px; font-size: 16px; border-bottom: 1px solid #ddd;">${updatedOrder.firstName.length === 0 ? "Имя" : updatedOrder.firstName} x ${updatedOrder.phone.length === 0 ? "Телефон" : updatedOrder.phone}</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 10px; font-size: 16px; border-bottom: 1px solid #ddd;"><strong>Заказ:</strong></td>
+                                <td style="padding: 10px; font-size: 16px; border-bottom: 1px solid #ddd;">
+                                ${updatedOrder.products?.map((item) => `${item.product.name} x ${item.quantity}`).join("<br>")}
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                                `,
+                        });
+
+                    const emailUser = await strapi
+                        .plugin("email")
+                        .service("email")
+                        .send({
+                            to: updatedOrder.email,
+                            from: "1loso@mail.ru",
+                            subject: "Ваш заказ на skinlight.ru",
+                            text: "Ваш заказ на skinlight.ru",
+                            html: `
+                <div style="font-family: Arial, sans-serif; color: #333; padding: 20px; max-width: 800px; margin: auto;">
+                    <h4 style="font-size: 18px; color: #555; margin-bottom: 20px;">Ваш заказ:</h4>
+                    <table style="width: 100%; border-collapse: collapse; border: 1px solid #ddd; background-color: #f9f9f9;">
+                        <tr>
+                            <td style="padding: 10px; font-size: 16px; border-bottom: 1px solid #ddd;"><strong>Заказ:</strong></td>
+                            <td style="padding: 10px; font-size: 16px; border-bottom: 1px solid #ddd;">
+                            ${updatedOrder.products?.map((item) => `${item.product.name} x ${item.quantity}`).join("<br>")}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px; font-size: 16px; border-bottom: 1px solid #ddd;"><strong>Статус заказа:</strong></td>
+                            <td style="padding: 10px; font-size: 16px; border-bottom: 1px solid #ddd;">
+                            ${updatedOrder.orderStatus}
+                            </td>
+                        </tr>
+                    </table>
+                    <p>Спасибо за заказ! Менеджер свяжется с вами в ближайшее время! </p>
+                    <a href="https://sveltekit-app.cr.ylean.ru/order/${updatedOrder.documentId}">Ссылка на страницу заказа</a>
+                </div>
+                            `,
+                        });
+
                     await strapi
                         .plugin("yookassa-payment")
                         .service("service")
@@ -97,6 +177,7 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
 
                 case "payment.canceled":
                     await processOrderStatus(object.id, "Отменен");
+                    console.log("payment.canceled");
                     await strapi
                         .plugin("yookassa-payment")
                         .service("service")
@@ -122,6 +203,43 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
             return ctx.internalServerError(
                 "Внутренняя ошибка сервера при обработке уведомления",
             );
+        }
+    },
+    async sendFormMessageToAdmin(ctx) {
+        const { name, phone, message } = ctx.request.body;
+        try {
+            await strapi
+                .plugin("email")
+                .service("email")
+                .send({
+                    to: "vyshyvanovilya@gmail.com",
+                    from: "1loso@mail.ru",
+                    subject: "Новое обращение",
+                    text: "Новое обращение",
+                    html: `
+            <div style="font-family: Arial, sans-serif; color: #333; padding: 20px; max-width: 600px; margin: auto;">
+                <h4 style="font-size: 18px; color: #555; margin-bottom: 20px;">Новое обращение:</h4>
+                <table style="width: 100%; border-collapse: collapse; border: 1px solid #ddd; background-color: #f9f9f9;">
+                    <tr>
+                        <td style="padding: 10px; font-size: 16px; border-bottom: 1px solid #ddd;"><strong>Имя:</strong></td>
+                        <td style="padding: 10px; font-size: 16px; border-bottom: 1px solid #ddd;">${name}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px; font-size: 16px; border-bottom: 1px solid #ddd;"><strong>Телефон:</strong></td>
+                        <td style="padding: 10px; font-size: 16px; border-bottom: 1px solid #ddd;">${phone}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px; font-size: 16px; border-bottom: 1px solid #ddd;"><strong>Сообщение:</strong></td>
+                        <td style="padding: 10px; font-size: 14px; color: #666;">${message}</td>
+                    </tr>
+                </table>
+            </div>
+        `,
+                });
+
+            return ctx.send("", 200);
+        } catch (err) {
+            console.warn("Ошибка в отправке Уведомления", err);
         }
     },
 }));

@@ -25,6 +25,28 @@
       "relation": "oneToMany",
       "target": "api::product.product",
       "mappedBy": "line"
+    },
+    "image": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": false
+    },
+    "brand": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::brand.brand",
+      "inversedBy": "lines"
+    },
+    "shownOnBrand": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::brand.brand",
+      "mappedBy": "shownLine"
     }
   }
 }

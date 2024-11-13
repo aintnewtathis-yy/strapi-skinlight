@@ -1,0 +1,12 @@
+{
+  "collectionName": "components_components_contacts_contacts_block_contents",
+  "info": {
+    "displayName": "contactsBlockContent"
+  },
+  "options": {},
+  "attributes": {
+    "content": {
+      "type": "richtext"
+    }
+  }
+}

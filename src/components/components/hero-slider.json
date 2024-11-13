@@ -1,0 +1,37 @@
+{
+  "collectionName": "components_components_hero_sliders",
+  "info": {
+    "displayName": "heroSlider",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "btnText": {
+      "type": "string"
+    },
+    "btnHref": {
+      "type": "string"
+    },
+    "imageMobile": {
+      "allowedTypes": [
+        "images"
+      ],
+      "type": "media",
+      "multiple": false
+    }
+  }
+}

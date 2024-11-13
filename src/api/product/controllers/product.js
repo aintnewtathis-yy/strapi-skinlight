@@ -8,6 +8,11 @@ module.exports = createCoreController("api::product.product", ({ strapi }) => ({
 
         try {
             const brands = await strapi.documents("api::brand.brand").findMany({
+                filters: {
+                    products: {
+                        $notNull: true
+                    }
+                },
                 populate: ["seo"],
                 status: "published",
             });
@@ -129,6 +134,7 @@ module.exports = createCoreController("api::product.product", ({ strapi }) => ({
                     populate: ["seo"],
                     status: "published",
                 });
+
             filtersObject["line"] = {
                 documentId: {
                     $eq: currentCategory.documentId,

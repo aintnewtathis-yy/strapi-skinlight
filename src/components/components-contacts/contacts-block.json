@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_components_contacts_contacts_blocks",
+  "info": {
+    "displayName": "contactsBlock",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "label": {
+      "type": "string"
+    },
+    "contactsBlockContent": {
+      "displayName": "contactsBlockContent",
+      "type": "component",
+      "repeatable": true,
+      "component": "components-contacts.contacts-block-content"
+    }
+  }
+}

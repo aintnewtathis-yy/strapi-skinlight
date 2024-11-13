@@ -82,6 +82,24 @@
       "relation": "oneToMany",
       "target": "api::order.order",
       "mappedBy": "user"
+    },
+    "certificates": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files"
+      ]
+    },
+    "masterStatus": {
+      "type": "enumeration",
+      "enum": [
+        "Ожидает проверки",
+        "Проверен",
+        "Не заверен"
+      ],
+      "default": "Не заверен"
     }
   }
 }

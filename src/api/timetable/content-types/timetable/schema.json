@@ -1,0 +1,35 @@
+{
+  "kind": "singleType",
+  "collectionName": "timetable_plural",
+  "info": {
+    "singularName": "timetable",
+    "pluralName": "timetable-plural",
+    "displayName": "Расписание",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "timetableEntity": {
+      "displayName": "timetableEntity",
+      "type": "component",
+      "repeatable": true,
+      "component": "components.timetable-entity"
+    },
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "image": {
+      "allowedTypes": [
+        "images"
+      ],
+      "type": "media",
+      "multiple": false
+    }
+  }
+}

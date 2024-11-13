@@ -483,6 +483,15 @@ export interface PluginUsersPermissionsUser
         address: Schema.Attribute.String;
         phone: Schema.Attribute.String;
         orders: Schema.Attribute.Relation<"oneToMany", "api::order.order">;
+        certificates: Schema.Attribute.Media<"images" | "files", true>;
+        masterStatus: Schema.Attribute.Enumeration<
+            [
+                "\u041E\u0436\u0438\u0434\u0430\u0435\u0442 \u043F\u0440\u043E\u0432\u0435\u0440\u043A\u0438",
+                "\u041F\u0440\u043E\u0432\u0435\u0440\u0435\u043D",
+                "\u041D\u0435 \u0437\u0430\u0432\u0435\u0440\u0435\u043D",
+            ]
+        > &
+            Schema.Attribute.DefaultTo<"\u041D\u0435 \u0437\u0430\u0432\u0435\u0440\u0435\u043D">;
         createdAt: Schema.Attribute.DateTime;
         updatedAt: Schema.Attribute.DateTime;
         publishedAt: Schema.Attribute.DateTime;
@@ -504,6 +513,7 @@ export interface ApiBrandBrand extends Struct.CollectionTypeSchema {
         singularName: "brand";
         pluralName: "brands";
         displayName: "\u0411\u0440\u0435\u043D\u0434\u044B";
+        description: "";
     };
     options: {
         draftAndPublish: true;
@@ -516,6 +526,16 @@ export interface ApiBrandBrand extends Struct.CollectionTypeSchema {
             "api::product.product"
         >;
         seo: Schema.Attribute.Component<"components.seo", false>;
+        lines: Schema.Attribute.Relation<"oneToMany", "api::line.line">;
+        brandHero: Schema.Attribute.Component<
+            "brand-components.brand-hero",
+            false
+        >;
+        brandAbout: Schema.Attribute.Component<
+            "brand-components.brand-about",
+            false
+        >;
+        shownLine: Schema.Attribute.Relation<"oneToOne", "api::line.line">;
         createdAt: Schema.Attribute.DateTime;
         updatedAt: Schema.Attribute.DateTime;
         publishedAt: Schema.Attribute.DateTime;
@@ -564,6 +584,143 @@ export interface ApiCategoryCategory extends Struct.CollectionTypeSchema {
     };
 }
 
+export interface ApiContactPageContactPage extends Struct.SingleTypeSchema {
+    collectionName: "contact_page_plural";
+    info: {
+        singularName: "contact-page";
+        pluralName: "contact-page-plural";
+        displayName: "\u041A\u043E\u043D\u0442\u0430\u043A\u0442\u044B";
+    };
+    options: {
+        draftAndPublish: true;
+    };
+    attributes: {
+        title: Schema.Attribute.String;
+        description: Schema.Attribute.Text;
+        contactsBlock: Schema.Attribute.Component<
+            "components-contacts.contacts-block",
+            true
+        >;
+        createdAt: Schema.Attribute.DateTime;
+        updatedAt: Schema.Attribute.DateTime;
+        publishedAt: Schema.Attribute.DateTime;
+        createdBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> &
+            Schema.Attribute.Private;
+        updatedBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> &
+            Schema.Attribute.Private;
+        locale: Schema.Attribute.String;
+        localizations: Schema.Attribute.Relation<
+            "oneToMany",
+            "api::contact-page.contact-page"
+        >;
+    };
+}
+
+export interface ApiCourseCourse extends Struct.CollectionTypeSchema {
+    collectionName: "courses";
+    info: {
+        singularName: "course";
+        pluralName: "courses";
+        displayName: "\u041A\u0443\u0440\u0441\u044B";
+        description: "";
+    };
+    options: {
+        draftAndPublish: true;
+    };
+    attributes: {
+        heroCourses: Schema.Attribute.Component<
+            "components-courses.hero-courses",
+            false
+        >;
+        blockCourses: Schema.Attribute.Component<
+            "components-courses.block-courses",
+            true
+        >;
+        seo: Schema.Attribute.Component<"components.seo", false>;
+        category: Schema.Attribute.Relation<
+            "manyToOne",
+            "api::course-category.course-category"
+        >;
+        title: Schema.Attribute.String;
+        bullets: Schema.Attribute.RichText;
+        createdAt: Schema.Attribute.DateTime;
+        updatedAt: Schema.Attribute.DateTime;
+        publishedAt: Schema.Attribute.DateTime;
+        createdBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> &
+            Schema.Attribute.Private;
+        updatedBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> &
+            Schema.Attribute.Private;
+        locale: Schema.Attribute.String;
+        localizations: Schema.Attribute.Relation<
+            "oneToMany",
+            "api::course.course"
+        >;
+    };
+}
+
+export interface ApiCourseCategoryCourseCategory
+    extends Struct.CollectionTypeSchema {
+    collectionName: "course_categories";
+    info: {
+        singularName: "course-category";
+        pluralName: "course-categories";
+        displayName: "\u041A\u0430\u0442\u0435\u0433\u043E\u0440\u0438\u0438 \u043A\u0443\u0440\u0441\u043E\u0432";
+        description: "";
+    };
+    options: {
+        draftAndPublish: true;
+    };
+    attributes: {
+        title: Schema.Attribute.String;
+        courses: Schema.Attribute.Relation<"oneToMany", "api::course.course">;
+        seo: Schema.Attribute.Component<"components.seo", false>;
+        createdAt: Schema.Attribute.DateTime;
+        updatedAt: Schema.Attribute.DateTime;
+        publishedAt: Schema.Attribute.DateTime;
+        createdBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> &
+            Schema.Attribute.Private;
+        updatedBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> &
+            Schema.Attribute.Private;
+        locale: Schema.Attribute.String;
+        localizations: Schema.Attribute.Relation<
+            "oneToMany",
+            "api::course-category.course-category"
+        >;
+    };
+}
+
+export interface ApiDistributorsDistributors
+    extends Struct.CollectionTypeSchema {
+    collectionName: "distributors_plural";
+    info: {
+        singularName: "distributors";
+        pluralName: "distributors-plural";
+        displayName: "\u0414\u0438\u0441\u0442\u0440\u0438\u0431\u044C\u044E\u0442\u043E\u0440\u044B";
+    };
+    options: {
+        draftAndPublish: true;
+    };
+    attributes: {
+        representative: Schema.Attribute.String;
+        town: Schema.Attribute.String;
+        contacts: Schema.Attribute.RichText;
+        socials: Schema.Attribute.RichText;
+        brands: Schema.Attribute.RichText;
+        createdAt: Schema.Attribute.DateTime;
+        updatedAt: Schema.Attribute.DateTime;
+        publishedAt: Schema.Attribute.DateTime;
+        createdBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> &
+            Schema.Attribute.Private;
+        updatedBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> &
+            Schema.Attribute.Private;
+        locale: Schema.Attribute.String;
+        localizations: Schema.Attribute.Relation<
+            "oneToMany",
+            "api::distributors.distributors"
+        >;
+    };
+}
+
 export interface ApiGlobalSettingsPageGlobalSettingsPage
     extends Struct.SingleTypeSchema {
     collectionName: "global_settings_pages";
@@ -577,7 +734,14 @@ export interface ApiGlobalSettingsPageGlobalSettingsPage
         draftAndPublish: true;
     };
     attributes: {
-        exchangeRate: Schema.Attribute.Integer;
+        exchangeRate_ella: Schema.Attribute.Integer;
+        exchangeRateOpt_ella: Schema.Attribute.Integer;
+        exchangeRate_pandhys: Schema.Attribute.Integer;
+        exchangeRateOpt_pandhys: Schema.Attribute.Integer;
+        exchangeRate_valmi: Schema.Attribute.Integer;
+        exchangeRateOpt_valmi: Schema.Attribute.Integer;
+        exchangeRate_perron: Schema.Attribute.Integer;
+        exchangeRateOpt_perron: Schema.Attribute.Integer;
         createdAt: Schema.Attribute.DateTime;
         updatedAt: Schema.Attribute.DateTime;
         publishedAt: Schema.Attribute.DateTime;
@@ -590,6 +754,40 @@ export interface ApiGlobalSettingsPageGlobalSettingsPage
             "oneToMany",
             "api::global-settings-page.global-settings-page"
         >;
+    };
+}
+
+export interface ApiHomeHome extends Struct.SingleTypeSchema {
+    collectionName: "home_plural";
+    info: {
+        singularName: "home";
+        pluralName: "home-plural";
+        displayName: "\u0413\u043B\u0430\u0432\u043D\u0430\u044F";
+        description: "";
+    };
+    options: {
+        draftAndPublish: true;
+    };
+    attributes: {
+        shownLine: Schema.Attribute.Relation<"oneToOne", "api::line.line">;
+        heroSlider: Schema.Attribute.Component<"components.hero-slider", true>;
+        heroAbout: Schema.Attribute.Component<
+            "components-home.home-about",
+            false
+        >;
+        homeBrands: Schema.Attribute.Component<
+            "components-home.home-brands",
+            true
+        >;
+        createdAt: Schema.Attribute.DateTime;
+        updatedAt: Schema.Attribute.DateTime;
+        publishedAt: Schema.Attribute.DateTime;
+        createdBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> &
+            Schema.Attribute.Private;
+        updatedBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> &
+            Schema.Attribute.Private;
+        locale: Schema.Attribute.String;
+        localizations: Schema.Attribute.Relation<"oneToMany", "api::home.home">;
     };
 }
 
@@ -611,6 +809,9 @@ export interface ApiLineLine extends Struct.CollectionTypeSchema {
             "oneToMany",
             "api::product.product"
         >;
+        image: Schema.Attribute.Media<"images" | "files" | "videos" | "audios">;
+        brand: Schema.Attribute.Relation<"manyToOne", "api::brand.brand">;
+        shownOnBrand: Schema.Attribute.Relation<"oneToOne", "api::brand.brand">;
         createdAt: Schema.Attribute.DateTime;
         updatedAt: Schema.Attribute.DateTime;
         publishedAt: Schema.Attribute.DateTime;
@@ -620,6 +821,38 @@ export interface ApiLineLine extends Struct.CollectionTypeSchema {
             Schema.Attribute.Private;
         locale: Schema.Attribute.String;
         localizations: Schema.Attribute.Relation<"oneToMany", "api::line.line">;
+    };
+}
+
+export interface ApiNavigationNavigation extends Struct.SingleTypeSchema {
+    collectionName: "navigation_plural";
+    info: {
+        singularName: "navigation";
+        pluralName: "navigation-plural";
+        displayName: "\u041D\u0430\u0432\u0438\u0433\u0430\u0446\u0438\u044F";
+        description: "";
+    };
+    options: {
+        draftAndPublish: true;
+    };
+    attributes: {
+        headerLink: Schema.Attribute.Component<"components-base.link", true>;
+        footerNavigation: Schema.Attribute.Component<
+            "components-base.footer-navigation",
+            false
+        >;
+        createdAt: Schema.Attribute.DateTime;
+        updatedAt: Schema.Attribute.DateTime;
+        publishedAt: Schema.Attribute.DateTime;
+        createdBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> &
+            Schema.Attribute.Private;
+        updatedBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> &
+            Schema.Attribute.Private;
+        locale: Schema.Attribute.String;
+        localizations: Schema.Attribute.Relation<
+            "oneToMany",
+            "api::navigation.navigation"
+        >;
     };
 }
 
@@ -650,6 +883,10 @@ export interface ApiOrderOrder extends Struct.CollectionTypeSchema {
             "plugin::users-permissions.user"
         >;
         address: Schema.Attribute.String;
+        email: Schema.Attribute.Email;
+        firstName: Schema.Attribute.String;
+        secondName: Schema.Attribute.String;
+        phone: Schema.Attribute.String;
         createdAt: Schema.Attribute.DateTime;
         updatedAt: Schema.Attribute.DateTime;
         publishedAt: Schema.Attribute.DateTime;
@@ -699,6 +936,7 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
             "oneToMany",
             "api::product.product"
         >;
+        priceRUBOpt: Schema.Attribute.Integer;
         createdAt: Schema.Attribute.DateTime;
         updatedAt: Schema.Attribute.DateTime;
         publishedAt: Schema.Attribute.DateTime;
@@ -710,6 +948,40 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
         localizations: Schema.Attribute.Relation<
             "oneToMany",
             "api::product.product"
+        >;
+    };
+}
+
+export interface ApiTimetableTimetable extends Struct.SingleTypeSchema {
+    collectionName: "timetable_plural";
+    info: {
+        singularName: "timetable";
+        pluralName: "timetable-plural";
+        displayName: "\u0420\u0430\u0441\u043F\u0438\u0441\u0430\u043D\u0438\u0435";
+        description: "";
+    };
+    options: {
+        draftAndPublish: true;
+    };
+    attributes: {
+        timetableEntity: Schema.Attribute.Component<
+            "components.timetable-entity",
+            true
+        >;
+        title: Schema.Attribute.String;
+        description: Schema.Attribute.Text;
+        image: Schema.Attribute.Media<"images">;
+        createdAt: Schema.Attribute.DateTime;
+        updatedAt: Schema.Attribute.DateTime;
+        publishedAt: Schema.Attribute.DateTime;
+        createdBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> &
+            Schema.Attribute.Private;
+        updatedBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> &
+            Schema.Attribute.Private;
+        locale: Schema.Attribute.String;
+        localizations: Schema.Attribute.Relation<
+            "oneToMany",
+            "api::timetable.timetable"
         >;
     };
 }
@@ -1103,10 +1375,17 @@ declare module "@strapi/strapi" {
             "plugin::users-permissions.user": PluginUsersPermissionsUser;
             "api::brand.brand": ApiBrandBrand;
             "api::category.category": ApiCategoryCategory;
+            "api::contact-page.contact-page": ApiContactPageContactPage;
+            "api::course.course": ApiCourseCourse;
+            "api::course-category.course-category": ApiCourseCategoryCourseCategory;
+            "api::distributors.distributors": ApiDistributorsDistributors;
             "api::global-settings-page.global-settings-page": ApiGlobalSettingsPageGlobalSettingsPage;
+            "api::home.home": ApiHomeHome;
             "api::line.line": ApiLineLine;
+            "api::navigation.navigation": ApiNavigationNavigation;
             "api::order.order": ApiOrderOrder;
             "api::product.product": ApiProductProduct;
+            "api::timetable.timetable": ApiTimetableTimetable;
             "admin::permission": AdminPermission;
             "admin::user": AdminUser;
             "admin::role": AdminRole;

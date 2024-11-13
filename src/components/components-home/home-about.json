@@ -1,0 +1,25 @@
+{
+  "collectionName": "components_components_home_home_abouts",
+  "info": {
+    "displayName": "homeAbout"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "text"
+    },
+    "description": {
+      "type": "richtext"
+    },
+    "miniTitle": {
+      "type": "string"
+    },
+    "image": {
+      "allowedTypes": [
+        "images"
+      ],
+      "type": "media",
+      "multiple": false
+    }
+  }
+}
