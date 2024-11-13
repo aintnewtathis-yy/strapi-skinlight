@@ -25,31 +25,6 @@ export interface ComponentsHomeHomeAbout extends Struct.ComponentSchema {
     };
 }
 
-export interface ComponentsCoursesHeroCourses extends Struct.ComponentSchema {
-    collectionName: "components_components_courses_hero_courses";
-    info: {
-        displayName: "heroCourses";
-    };
-    attributes: {
-        title: Schema.Attribute.String;
-        description: Schema.Attribute.String;
-        image: Schema.Attribute.Media<"images">;
-    };
-}
-
-export interface ComponentsCoursesBlockCourses extends Struct.ComponentSchema {
-    collectionName: "components_components_courses_block_courses";
-    info: {
-        displayName: "blockCourses";
-        description: "";
-    };
-    attributes: {
-        title: Schema.Attribute.String;
-        content: Schema.Attribute.RichText;
-        image: Schema.Attribute.Media<"images">;
-    };
-}
-
 export interface ComponentsContactsContactsBlock
     extends Struct.ComponentSchema {
     collectionName: "components_components_contacts_contacts_blocks";
@@ -77,89 +52,28 @@ export interface ComponentsContactsContactsBlockContent
     };
 }
 
-export interface ComponentsTimetableEntity extends Struct.ComponentSchema {
-    collectionName: "components_components_timetable_entities";
+export interface ComponentsCoursesHeroCourses extends Struct.ComponentSchema {
+    collectionName: "components_components_courses_hero_courses";
     info: {
-        displayName: "timetableEntity";
-        description: "";
+        displayName: "heroCourses";
     };
     attributes: {
-        title: Schema.Attribute.String;
-        level: Schema.Attribute.String;
-        price: Schema.Attribute.String;
-        date: Schema.Attribute.DateTime;
-        href: Schema.Attribute.String;
-    };
-}
-
-export interface ComponentsSkinType2 extends Struct.ComponentSchema {
-    collectionName: "components_components_skin_type2s";
-    info: {
-        displayName: "skinType";
-        description: "";
-    };
-    attributes: {
-        all: Schema.Attribute.Boolean;
-        fat: Schema.Attribute.Boolean;
-        combined: Schema.Attribute.Boolean;
-        normal: Schema.Attribute.Boolean;
-        dehydrated: Schema.Attribute.Boolean;
-        dry: Schema.Attribute.Boolean;
-        sensitive: Schema.Attribute.Boolean;
-    };
-}
-
-export interface ComponentsSeo extends Struct.ComponentSchema {
-    collectionName: "components_components_seos";
-    info: {
-        displayName: "SEO";
-    };
-    attributes: {
-        title: Schema.Attribute.String;
-        description: Schema.Attribute.Text;
-        image: Schema.Attribute.Media<"images">;
-        slug: Schema.Attribute.String;
-    };
-}
-
-export interface ComponentsProductList extends Struct.ComponentSchema {
-    collectionName: "components_components_product_lists";
-    info: {
-        displayName: "productList";
-        description: "";
-    };
-    attributes: {
-        product: Schema.Attribute.Relation<"oneToOne", "api::product.product">;
-        quantity: Schema.Attribute.Integer;
-        title: Schema.Attribute.String;
-    };
-}
-
-export interface ComponentsHeroSlider extends Struct.ComponentSchema {
-    collectionName: "components_components_hero_sliders";
-    info: {
-        displayName: "heroSlider";
-        description: "";
-    };
-    attributes: {
-        image: Schema.Attribute.Media<"images">;
         title: Schema.Attribute.String;
         description: Schema.Attribute.String;
-        btnText: Schema.Attribute.String;
-        btnHref: Schema.Attribute.String;
-        imageMobile: Schema.Attribute.Media<"images">;
+        image: Schema.Attribute.Media<"images">;
     };
 }
 
-export interface ComponentsHeaderLink extends Struct.ComponentSchema {
-    collectionName: "components_components_header_links";
+export interface ComponentsCoursesBlockCourses extends Struct.ComponentSchema {
+    collectionName: "components_components_courses_block_courses";
     info: {
-        displayName: "headerLink";
+        displayName: "blockCourses";
         description: "";
     };
     attributes: {
-        label: Schema.Attribute.String;
-        href: Schema.Attribute.String;
+        title: Schema.Attribute.String;
+        content: Schema.Attribute.RichText;
+        image: Schema.Attribute.Media<"images">;
     };
 }
 
@@ -254,21 +168,101 @@ export interface BrandComponentsBrandAbout extends Struct.ComponentSchema {
     };
 }
 
+export interface ComponentsTimetableEntity extends Struct.ComponentSchema {
+    collectionName: "components_components_timetable_entities";
+    info: {
+        displayName: "timetableEntity";
+        description: "";
+    };
+    attributes: {
+        title: Schema.Attribute.String;
+        level: Schema.Attribute.String;
+        price: Schema.Attribute.String;
+        date: Schema.Attribute.DateTime;
+        href: Schema.Attribute.String;
+    };
+}
+
+export interface ComponentsSkinType2 extends Struct.ComponentSchema {
+    collectionName: "components_components_skin_type2s";
+    info: {
+        displayName: "skinType";
+        description: "";
+    };
+    attributes: {
+        all: Schema.Attribute.Boolean;
+        fat: Schema.Attribute.Boolean;
+        combined: Schema.Attribute.Boolean;
+        normal: Schema.Attribute.Boolean;
+        dehydrated: Schema.Attribute.Boolean;
+        dry: Schema.Attribute.Boolean;
+        sensitive: Schema.Attribute.Boolean;
+    };
+}
+
+export interface ComponentsSeo extends Struct.ComponentSchema {
+    collectionName: "components_components_seos";
+    info: {
+        displayName: "SEO";
+    };
+    attributes: {
+        title: Schema.Attribute.String;
+        description: Schema.Attribute.Text;
+        image: Schema.Attribute.Media<"images">;
+        slug: Schema.Attribute.String;
+    };
+}
+
+export interface ComponentsProductList extends Struct.ComponentSchema {
+    collectionName: "components_components_product_lists";
+    info: {
+        displayName: "productList";
+        description: "";
+    };
+    attributes: {
+        product: Schema.Attribute.Relation<"oneToOne", "api::product.product">;
+        quantity: Schema.Attribute.Integer;
+        title: Schema.Attribute.String;
+    };
+}
+
+export interface ComponentsHeroSlider extends Struct.ComponentSchema {
+    collectionName: "components_components_hero_sliders";
+    info: {
+        displayName: "heroSlider";
+        description: "";
+    };
+    attributes: {
+        image: Schema.Attribute.Media<"images">;
+        title: Schema.Attribute.String;
+        description: Schema.Attribute.String;
+        btnText: Schema.Attribute.String;
+        btnHref: Schema.Attribute.String;
+        imageMobile: Schema.Attribute.Media<"images">;
+    };
+}
+
+export interface ComponentsHeaderLink extends Struct.ComponentSchema {
+    collectionName: "components_components_header_links";
+    info: {
+        displayName: "headerLink";
+        description: "";
+    };
+    attributes: {
+        label: Schema.Attribute.String;
+        href: Schema.Attribute.String;
+    };
+}
+
 declare module "@strapi/strapi" {
     export module Public {
         export interface ComponentSchemas {
             "components-home.home-brands": ComponentsHomeHomeBrands;
             "components-home.home-about": ComponentsHomeHomeAbout;
-            "components-courses.hero-courses": ComponentsCoursesHeroCourses;
-            "components-courses.block-courses": ComponentsCoursesBlockCourses;
             "components-contacts.contacts-block": ComponentsContactsContactsBlock;
             "components-contacts.contacts-block-content": ComponentsContactsContactsBlockContent;
-            "components.timetable-entity": ComponentsTimetableEntity;
-            "components.skin-type2": ComponentsSkinType2;
-            "components.seo": ComponentsSeo;
-            "components.product-list": ComponentsProductList;
-            "components.hero-slider": ComponentsHeroSlider;
-            "components.header-link": ComponentsHeaderLink;
+            "components-courses.hero-courses": ComponentsCoursesHeroCourses;
+            "components-courses.block-courses": ComponentsCoursesBlockCourses;
             "components-base.link": ComponentsBaseLink;
             "components-base.label-with-boolean": ComponentsBaseLabelWithBoolean;
             "components-base.footer-socials": ComponentsBaseFooterSocials;
@@ -276,6 +270,12 @@ declare module "@strapi/strapi" {
             "components-base.footer-column": ComponentsBaseFooterColumn;
             "brand-components.brand-hero": BrandComponentsBrandHero;
             "brand-components.brand-about": BrandComponentsBrandAbout;
+            "components.timetable-entity": ComponentsTimetableEntity;
+            "components.skin-type2": ComponentsSkinType2;
+            "components.seo": ComponentsSeo;
+            "components.product-list": ComponentsProductList;
+            "components.hero-slider": ComponentsHeroSlider;
+            "components.header-link": ComponentsHeaderLink;
         }
     }
 }
