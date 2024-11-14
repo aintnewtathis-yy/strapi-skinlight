@@ -114,32 +114,44 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
                             to: "vyshyvanovilya@gmail.com",
                             from: "1loso@mail.ru",
                             subject: "Новый заказ",
-                            text: "Новый заказ",
+                            text: `Новый заказ - ${updatedOrder.orderId}`,
                             html: `
-                    <div style="font-family: Arial, sans-serif; color: #333; padding: 20px; max-width: 800px; margin: auto;">
-                        <h4 style="font-size: 18px; color: #555; margin-bottom: 20px;">Новое обращение:</h4>
-                        <table style="width: 100%; border-collapse: collapse; border: 1px solid #ddd; background-color: #f9f9f9;">
-                            <tr>
-                                <td style="padding: 10px; font-size: 16px; border-bottom: 1px solid #ddd;"><strong>Номер заказа:</strong></td>
-                                <td style="padding: 10px; font-size: 16px; border-bottom: 1px solid #ddd;">${updatedOrder.orderId}</td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 10px; font-size: 16px; border-bottom: 1px solid #ddd;"><strong>Имя и телефон покупателя:</strong></td>
-                                <td style="padding: 10px; font-size: 16px; border-bottom: 1px solid #ddd;">${updatedOrder.firstName.length === 0 ? "Имя" : updatedOrder.firstName} x ${updatedOrder.phone.length === 0 ? "Телефон" : updatedOrder.phone}</td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 10px; font-size: 16px; border-bottom: 1px solid #ddd;"><strong>Заказ:</strong></td>
-                                <td style="padding: 10px; font-size: 16px; border-bottom: 1px solid #ddd;">
-                                ${updatedOrder.products?.map((item) => `${item.product.name} x ${item.quantity}`).join("<br>")}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 10px; font-size: 16px; border-bottom: 1px solid #ddd;"><strong>Сумма заказа:</strong></td>
-                                <td style="padding: 10px; font-size: 16px; border-bottom: 1px solid #ddd;">${updatedOrder.total} руб</td>
-                            </tr>
-                        </table>
-                    </div>
-                                `,
+    <div style="font-family: Arial, sans-serif; color: #4A3931; padding: 20px; max-width: 800px; margin: auto; border-radius: 0.125rem;">
+        <h4 style="font-size: 24px; color: #4A3931; margin-bottom: 20px; text-align: center;">Новый заказ</h4>
+        <table style="width: 100%; border-collapse: collapse; background-color: #FAFAFA; border-radius: 0.25rem; overflow: hidden;">
+            <tr>
+                <td style="white-space: nowrap; padding: 15px; font-size: 16px; border: 1px solid #EAE9E5; background-color: #D3CAC0;">
+                    <strong>Номер заказа:</strong>
+                </td>
+                <td style="width: 100%; padding: 15px; font-size: 16px; border: 1px solid #EAE9E5;">
+                    ${updatedOrder.orderId}
+                </td>
+            </tr>
+            <tr>
+                <td style="white-space: nowrap;padding: 15px; font-size: 16px; border: 1px solid #EAE9E5; background-color: #D3CAC0;">
+                    <strong>Имя и телефон покупателя:</strong>
+                </td>
+                <td style="width: 100%; padding: 15px; font-size: 16px; border: 1px solid #EAE9E5;">
+                ${updatedOrder.firstName.length === 0 ? "Имя" : updatedOrder.firstName} x ${updatedOrder.phone.length === 0 ? "Телефон" : updatedOrder.phone}
+                </td>
+            </tr>
+            <tr>
+                <td style="white-space: nowrap; padding: 15px; font-size: 16px; border: 1px solid #EAE9E5;  background-color: #D3CAC0;">
+                    <strong>Заказ:</strong>
+                </td>
+                <td style="width: 100%; padding: 15px; font-size: 16px; border: 1px solid #EAE9E5;">
+                    ${updatedOrder.products?.map((item) => `<div style="margin-bottom:5px;">${item.product.name} x ${item.quantity}</div>`).join("")}
+                </td>
+            </tr>
+            <tr>
+                <td style="white-space: nowrap;padding: 15px; font-size: 16px; border: 1px solid #EAE9E5; background-color: #D3CAC0;">
+                    <strong>Сумма заказа:</strong>
+                </td>
+                <td style="width: 100%; padding: 15px; font-size: 16px; border: 1px solid #EAE9E5;">${updatedOrder.total} руб</td>
+            </tr>
+        </table>
+    </div>
+                    `,
                         });
 
                     const emailUser = await strapi
@@ -151,32 +163,39 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
                             subject: "Ваш заказ на skinlight.ru",
                             text: "Ваш заказ на skinlight.ru",
                             html: `
-                <div style="font-family: Arial, sans-serif; color: #333; padding: 20px; max-width: 800px; margin: auto; background-color: #fff; box-shadow: 0px 4px 8px rgba(0,0,0,0.1);">
-    <h4 style="font-size: 24px; color: #444; margin-bottom: 20px; text-align: center;">Ваш заказ</h4>
-    <table style="width: 100%; border-collapse: collapse; border: 1px solid #e0e0e0; background-color: #f9f9f9; border-radius: 8px; overflow: hidden;">
-        <tr>
-            <td style="padding: 15px; font-size: 16px; border-bottom: 1px solid #ddd; background-color: #f0f0f0;"><strong>Заказ:</strong></td>
-            <td style="padding: 15px; font-size: 16px; border-bottom: 1px solid #ddd;">
-                ${updatedOrder.products?.map((item) => `<div>${item.product.name} x ${item.quantity}</div>`).join("")}
-            </td>
-        </tr>
-        <tr>
-            <td style="padding: 15px; font-size: 16px; border-bottom: 1px solid #ddd; background-color: #f0f0f0;"><strong>Статус заказа:</strong></td>
-            <td style="padding: 15px; font-size: 16px; border-bottom: 1px solid #ddd;">
-                ${updatedOrder.orderStatus}
-            </td>
-        </tr>
-        <tr>
-            <td style="padding: 15px; font-size: 16px; background-color: #f0f0f0;"><strong>Сумма заказа:</strong></td>
-            <td style="padding: 15px; font-size: 16px;">${updatedOrder.total} руб</td>
-        </tr>
-    </table>
-    <p style="text-align: center; margin-top: 20px; font-size: 16px;">Спасибо за заказ! Менеджер свяжется с вами в ближайшее время.</p>
-    <div style="text-align: center; margin-top: 20px;">
-        <a href="https://sveltekit-app.cr.ylean.ru/order/${updatedOrder.documentId}" style="display: inline-block; padding: 10px 20px; font-size: 16px; color: #fff; background-color: #4CAF50; text-decoration: none; border-radius: 5px;">Ссылка на страницу заказа</a>
+    <div style="font-family: Arial, sans-serif; color: #4A3931; padding: 20px; max-width: 800px; margin: auto; border-radius: 0.125rem;">
+        <h4 style="font-size: 24px; color: #4A3931; margin-bottom: 20px; text-align: center;">Ваш заказ</h4>
+        <table style="width: 100%; border-collapse: collapse; background-color: #FAFAFA; border-radius: 0.25rem; overflow: hidden;">
+            <tr>
+                <td style="white-space: nowrap; padding: 15px; font-size: 16px; border: 1px solid #EAE9E5;  background-color: #D3CAC0;">
+                    <strong>Заказ:</strong>
+                </td>
+                <td style="width: 100%; padding: 15px; font-size: 16px; border: 1px solid #EAE9E5;">
+                    ${updatedOrder.products?.map((item) => `<div style="margin-bottom:5px;">${item.product.name} x ${item.quantity}</div>`).join("")}
+                </td>
+            </tr>
+            <tr>
+                <td style="white-space: nowrap; padding: 15px; font-size: 16px; border: 1px solid #EAE9E5; background-color: #D3CAC0;">
+                    <strong>Статус заказа:</strong>
+                </td>
+                <td style="width: 100%; padding: 15px; font-size: 16px; border: 1px solid #EAE9E5;">
+                    ${updatedOrder.orderStatus}
+                </td>
+            </tr>
+            <tr>
+                <td style="white-space: nowrap;padding: 15px; font-size: 16px; border: 1px solid #EAE9E5; background-color: #D3CAC0;">
+                    <strong>Сумма заказа:</strong>
+                </td>
+                <td style="width: 100%; padding: 15px; font-size: 16px; border: 1px solid #EAE9E5;">${updatedOrder.total} руб</td>
+            </tr>
+        </table>
+        <p style="text-align: center; margin-top: 20px; font-size: 16px; color: #4A3931;">Спасибо за заказ! Менеджер свяжется с вами в ближайшее время.</p>
+        <div style="text-align: center; margin-top: 20px;">
+            <a href="https://sveltekit-app.cr.ylean.ru/order/${updatedOrder.documentId}" style="display: inline-block; padding: 12px 24px; font-size: 16px; color: #FFFFFF; background-color: #4A3931; border-radius: 4px; text-decoration: none; font-weight: bold; transition: background-color 0.3s;">
+                Перейти к заказу
+            </a>
+        </div>
     </div>
-</div>
-
                             `,
                         });
 
@@ -228,23 +247,35 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
                     subject: "Новое обращение",
                     text: "Новое обращение",
                     html: `
-            <div style="font-family: Arial, sans-serif; color: #333; padding: 20px; max-width: 600px; margin: auto;">
-                <h4 style="font-size: 18px; color: #555; margin-bottom: 20px;">Новое обращение:</h4>
-                <table style="width: 100%; border-collapse: collapse; border: 1px solid #ddd; background-color: #f9f9f9;">
-                    <tr>
-                        <td style="padding: 10px; font-size: 16px; border-bottom: 1px solid #ddd;"><strong>Имя:</strong></td>
-                        <td style="padding: 10px; font-size: 16px; border-bottom: 1px solid #ddd;">${name}</td>
-                    </tr>
-                    <tr>
-                        <td style="padding: 10px; font-size: 16px; border-bottom: 1px solid #ddd;"><strong>Телефон:</strong></td>
-                        <td style="padding: 10px; font-size: 16px; border-bottom: 1px solid #ddd;">${phone}</td>
-                    </tr>
-                    <tr>
-                        <td style="padding: 10px; font-size: 16px; border-bottom: 1px solid #ddd;"><strong>Сообщение:</strong></td>
-                        <td style="padding: 10px; font-size: 14px; color: #666;">${message}</td>
-                    </tr>
-                </table>
-            </div>
+    <div style="font-family: Arial, sans-serif; color: #4A3931; padding: 20px; max-width: 800px; margin: auto; border-radius: 0.125rem;">
+        <h4 style="font-size: 24px; color: #4A3931; margin-bottom: 20px; text-align: center;">Новое обращение</h4>
+        <table style="width: 100%; border-collapse: collapse; background-color: #FAFAFA; border-radius: 0.25rem; overflow: hidden;">
+            <tr>
+                <td style="white-space: nowrap; padding: 15px; font-size: 16px; border: 1px solid #EAE9E5; background-color: #D3CAC0;">
+                    <strong>Имя:</strong>
+                </td>
+                <td style="width: 100%; padding: 15px; font-size: 16px; border: 1px solid #EAE9E5;">
+                    ${name}
+                </td>
+            </tr>
+            <tr>
+                <td style="white-space: nowrap;padding: 15px; font-size: 16px; border: 1px solid #EAE9E5; background-color: #D3CAC0;">
+                    <strong>Телефон:</strong>
+                </td>
+                <td style="width: 100%; padding: 15px; font-size: 16px; border: 1px solid #EAE9E5;">
+                    ${phone}
+                </td>
+            </tr>
+            <tr>
+                <td style="white-space: nowrap; padding: 15px; font-size: 16px; border: 1px solid #EAE9E5;  background-color: #D3CAC0;">
+                    <strong>Сообщение:</strong>
+                </td>
+                <td style="width: 100%; padding: 15px; font-size: 16px; border: 1px solid #EAE9E5;">
+                    ${message}
+                </td>
+            </tr>
+        </table>
+    </div>
         `,
                 });
 

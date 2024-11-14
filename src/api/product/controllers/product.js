@@ -259,6 +259,8 @@ module.exports = createCoreController("api::product.product", ({ strapi }) => ({
                         "brand",
                         "brand.seo",
                         "crosssales",
+                        "crosssales.product",
+                        "crosssales.product.thumbnail",
                         "seo",
                         "seo.image",
                         "thumbnail",
