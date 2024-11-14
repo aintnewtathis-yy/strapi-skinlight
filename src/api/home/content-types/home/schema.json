@@ -31,6 +31,11 @@
       "type": "component",
       "repeatable": true,
       "component": "components-home.home-brands"
+    },
+    "seo": {
+      "type": "component",
+      "repeatable": false,
+      "component": "components.seo"
     }
   }
 }

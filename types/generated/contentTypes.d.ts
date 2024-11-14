@@ -590,6 +590,7 @@ export interface ApiContactPageContactPage extends Struct.SingleTypeSchema {
         singularName: "contact-page";
         pluralName: "contact-page-plural";
         displayName: "\u041A\u043E\u043D\u0442\u0430\u043A\u0442\u044B";
+        description: "";
     };
     options: {
         draftAndPublish: true;
@@ -601,6 +602,7 @@ export interface ApiContactPageContactPage extends Struct.SingleTypeSchema {
             "components-contacts.contacts-block",
             true
         >;
+        seo: Schema.Attribute.Component<"components.seo", false>;
         createdAt: Schema.Attribute.DateTime;
         updatedAt: Schema.Attribute.DateTime;
         publishedAt: Schema.Attribute.DateTime;
@@ -779,6 +781,7 @@ export interface ApiHomeHome extends Struct.SingleTypeSchema {
             "components-home.home-brands",
             true
         >;
+        seo: Schema.Attribute.Component<"components.seo", false>;
         createdAt: Schema.Attribute.DateTime;
         updatedAt: Schema.Attribute.DateTime;
         publishedAt: Schema.Attribute.DateTime;
@@ -971,6 +974,7 @@ export interface ApiTimetableTimetable extends Struct.SingleTypeSchema {
         title: Schema.Attribute.String;
         description: Schema.Attribute.Text;
         image: Schema.Attribute.Media<"images">;
+        seo: Schema.Attribute.Component<"components.seo", false>;
         createdAt: Schema.Attribute.DateTime;
         updatedAt: Schema.Attribute.DateTime;
         publishedAt: Schema.Attribute.DateTime;
