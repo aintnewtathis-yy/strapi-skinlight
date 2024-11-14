@@ -24,8 +24,8 @@ module.exports = ({ env }) => ({
                 host: env("SMTP_HOST", "smtp.mail.ru"),
                 port: env("SMTP_PORT", 465),
                 auth: {
-                    user: env("SMTP_USERNAME", "1loso@mail.ru"),
-                    pass: env("SMTP_PASSWORD", "rrmtdN7vtvyEgfHt1Hja"),
+                    user: env("SMTP_USERNAME"),
+                    pass: env("SMTP_PASSWORD"),
                 },
             },
             settings: {

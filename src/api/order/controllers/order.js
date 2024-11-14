@@ -133,6 +133,10 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
                                 ${updatedOrder.products?.map((item) => `${item.product.name} x ${item.quantity}`).join("<br>")}
                                 </td>
                             </tr>
+                            <tr>
+                                <td style="padding: 10px; font-size: 16px; border-bottom: 1px solid #ddd;"><strong>Сумма заказа:</strong></td>
+                                <td style="padding: 10px; font-size: 16px; border-bottom: 1px solid #ddd;">${updatedOrder.total} руб</td>
+                            </tr>
                         </table>
                     </div>
                                 `,
@@ -147,25 +151,32 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
                             subject: "Ваш заказ на skinlight.ru",
                             text: "Ваш заказ на skinlight.ru",
                             html: `
-                <div style="font-family: Arial, sans-serif; color: #333; padding: 20px; max-width: 800px; margin: auto;">
-                    <h4 style="font-size: 18px; color: #555; margin-bottom: 20px;">Ваш заказ:</h4>
-                    <table style="width: 100%; border-collapse: collapse; border: 1px solid #ddd; background-color: #f9f9f9;">
-                        <tr>
-                            <td style="padding: 10px; font-size: 16px; border-bottom: 1px solid #ddd;"><strong>Заказ:</strong></td>
-                            <td style="padding: 10px; font-size: 16px; border-bottom: 1px solid #ddd;">
-                            ${updatedOrder.products?.map((item) => `${item.product.name} x ${item.quantity}`).join("<br>")}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="padding: 10px; font-size: 16px; border-bottom: 1px solid #ddd;"><strong>Статус заказа:</strong></td>
-                            <td style="padding: 10px; font-size: 16px; border-bottom: 1px solid #ddd;">
-                            ${updatedOrder.orderStatus}
-                            </td>
-                        </tr>
-                    </table>
-                    <p>Спасибо за заказ! Менеджер свяжется с вами в ближайшее время! </p>
-                    <a href="https://sveltekit-app.cr.ylean.ru/order/${updatedOrder.documentId}">Ссылка на страницу заказа</a>
-                </div>
+                <div style="font-family: Arial, sans-serif; color: #333; padding: 20px; max-width: 800px; margin: auto; background-color: #fff; box-shadow: 0px 4px 8px rgba(0,0,0,0.1);">
+    <h4 style="font-size: 24px; color: #444; margin-bottom: 20px; text-align: center;">Ваш заказ</h4>
+    <table style="width: 100%; border-collapse: collapse; border: 1px solid #e0e0e0; background-color: #f9f9f9; border-radius: 8px; overflow: hidden;">
+        <tr>
+            <td style="padding: 15px; font-size: 16px; border-bottom: 1px solid #ddd; background-color: #f0f0f0;"><strong>Заказ:</strong></td>
+            <td style="padding: 15px; font-size: 16px; border-bottom: 1px solid #ddd;">
+                ${updatedOrder.products?.map((item) => `<div>${item.product.name} x ${item.quantity}</div>`).join("")}
+            </td>
+        </tr>
+        <tr>
+            <td style="padding: 15px; font-size: 16px; border-bottom: 1px solid #ddd; background-color: #f0f0f0;"><strong>Статус заказа:</strong></td>
+            <td style="padding: 15px; font-size: 16px; border-bottom: 1px solid #ddd;">
+                ${updatedOrder.orderStatus}
+            </td>
+        </tr>
+        <tr>
+            <td style="padding: 15px; font-size: 16px; background-color: #f0f0f0;"><strong>Сумма заказа:</strong></td>
+            <td style="padding: 15px; font-size: 16px;">${updatedOrder.total} руб</td>
+        </tr>
+    </table>
+    <p style="text-align: center; margin-top: 20px; font-size: 16px;">Спасибо за заказ! Менеджер свяжется с вами в ближайшее время.</p>
+    <div style="text-align: center; margin-top: 20px;">
+        <a href="https://sveltekit-app.cr.ylean.ru/order/${updatedOrder.documentId}" style="display: inline-block; padding: 10px 20px; font-size: 16px; color: #fff; background-color: #4CAF50; text-decoration: none; border-radius: 5px;">Ссылка на страницу заказа</a>
+    </div>
+</div>
+
                             `,
                         });
 

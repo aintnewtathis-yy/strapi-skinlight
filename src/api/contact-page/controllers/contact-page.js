@@ -14,7 +14,12 @@ module.exports = createCoreController(
                 const data = await strapi
                     .documents("api::contact-page.contact-page")
                     .findFirst({
-                        populate: ["contactsBlock", "contactsBlock.contactsBlockContent"],
+                        populate: [
+                            "contactsBlock",
+                            "contactsBlock.contactsBlockContent",
+                            "seo",
+                            "seo.image",
+                        ],
                     });
 
                 return data;
