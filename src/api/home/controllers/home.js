@@ -45,6 +45,8 @@ module.exports = createCoreController("api::home.home", ({ strapi }) => ({
                         "heroAbout.image",
                         "homeBrands",
                         "homeBrands.image",
+                        "seo",
+                        "seo.image"
                     ],
                     status: "published",
                 });
