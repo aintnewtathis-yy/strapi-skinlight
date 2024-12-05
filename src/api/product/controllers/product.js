@@ -243,7 +243,6 @@ module.exports = createCoreController("api::product.product", ({ strapi }) => ({
     async getProduct(ctx) {
         const { productSlug } = ctx.query;
 
-        console.log(productSlug)
         try {
             let crosssales;
             const product = await strapi
@@ -267,8 +266,6 @@ module.exports = createCoreController("api::product.product", ({ strapi }) => ({
                     ],
                     status: "published",
                 });
-
-                console.log(product)
 
             if (product.crosssales.length === 0) {
                 crosssales = await strapi

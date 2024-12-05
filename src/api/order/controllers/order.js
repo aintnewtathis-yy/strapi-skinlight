@@ -42,11 +42,10 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
                     secondName: data.userData.secondName,
                     email: data.userData.email,
                     phone: data.userData.phone,
+                    promocode: data.promocode,
                 },
                 status: "published",
             });
-
-            console.log(order);
 
             //получаем ссылку на оплату и id заказа от юкассы
             const paymentDetails = await strapi
@@ -111,8 +110,8 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
                         .plugin("email")
                         .service("email")
                         .send({
-                            to: "vyshyvanovilya@gmail.com",
-                            from: "1loso@mail.ru",
+                            to: strapi.config.get('server.app.ADMIN_EMAIL', '1loso@mail.ru'),
+                            from: strapi.config.get('server.app.FROM_EMAIL', '1loso@mail.ru'),
                             subject: "Новый заказ",
                             text: `Новый заказ - ${updatedOrder.orderId}`,
                             html: `
@@ -159,7 +158,7 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
                         .service("email")
                         .send({
                             to: updatedOrder.email,
-                            from: "1loso@mail.ru",
+                            from: strapi.config.get('server.app.FROM_EMAIL', '1loso@mail.ru'),
                             subject: "Ваш заказ на skinlight.ru",
                             text: "Ваш заказ на skinlight.ru",
                             html: `
@@ -242,8 +241,8 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
                 .plugin("email")
                 .service("email")
                 .send({
-                    to: "vyshyvanovilya@gmail.com",
-                    from: "1loso@mail.ru",
+                    to: strapi.config.get('server.app.ADMIN_EMAIL', '1loso@mail.ru'),
+                    from: strapi.config.get('server.app.FROM_EMAIL', '1loso@mail.ru'),
                     subject: "Новое обращение",
                     text: "Новое обращение",
                     html: `

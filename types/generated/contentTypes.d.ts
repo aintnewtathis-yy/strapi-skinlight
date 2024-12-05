@@ -827,6 +827,34 @@ export interface ApiLineLine extends Struct.CollectionTypeSchema {
     };
 }
 
+export interface ApiMassemailMassemail extends Struct.CollectionTypeSchema {
+    collectionName: "massemails";
+    info: {
+        singularName: "massemail";
+        pluralName: "massemails";
+        displayName: "\u041F\u043E\u0447\u0442\u044B \u0434\u043B\u044F \u0440\u0430\u0441\u0441\u044B\u043B\u043A\u0438";
+        description: "";
+    };
+    options: {
+        draftAndPublish: true;
+    };
+    attributes: {
+        emails_richtext: Schema.Attribute.RichText;
+        createdAt: Schema.Attribute.DateTime;
+        updatedAt: Schema.Attribute.DateTime;
+        publishedAt: Schema.Attribute.DateTime;
+        createdBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> &
+            Schema.Attribute.Private;
+        updatedBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> &
+            Schema.Attribute.Private;
+        locale: Schema.Attribute.String;
+        localizations: Schema.Attribute.Relation<
+            "oneToMany",
+            "api::massemail.massemail"
+        >;
+    };
+}
+
 export interface ApiNavigationNavigation extends Struct.SingleTypeSchema {
     collectionName: "navigation_plural";
     info: {
@@ -890,6 +918,10 @@ export interface ApiOrderOrder extends Struct.CollectionTypeSchema {
         firstName: Schema.Attribute.String;
         secondName: Schema.Attribute.String;
         phone: Schema.Attribute.String;
+        promocode: Schema.Attribute.Relation<
+            "oneToOne",
+            "api::promocode.promocode"
+        >;
         createdAt: Schema.Attribute.DateTime;
         updatedAt: Schema.Attribute.DateTime;
         publishedAt: Schema.Attribute.DateTime;
@@ -951,6 +983,34 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
         localizations: Schema.Attribute.Relation<
             "oneToMany",
             "api::product.product"
+        >;
+    };
+}
+
+export interface ApiPromocodePromocode extends Struct.CollectionTypeSchema {
+    collectionName: "promocodes";
+    info: {
+        singularName: "promocode";
+        pluralName: "promocodes";
+        displayName: "\u041F\u0440\u043E\u043C\u043E\u043A\u043E\u0434\u044B";
+    };
+    options: {
+        draftAndPublish: true;
+    };
+    attributes: {
+        promocode: Schema.Attribute.String;
+        discount: Schema.Attribute.Integer;
+        createdAt: Schema.Attribute.DateTime;
+        updatedAt: Schema.Attribute.DateTime;
+        publishedAt: Schema.Attribute.DateTime;
+        createdBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> &
+            Schema.Attribute.Private;
+        updatedBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> &
+            Schema.Attribute.Private;
+        locale: Schema.Attribute.String;
+        localizations: Schema.Attribute.Relation<
+            "oneToMany",
+            "api::promocode.promocode"
         >;
     };
 }
@@ -1386,9 +1446,11 @@ declare module "@strapi/strapi" {
             "api::global-settings-page.global-settings-page": ApiGlobalSettingsPageGlobalSettingsPage;
             "api::home.home": ApiHomeHome;
             "api::line.line": ApiLineLine;
+            "api::massemail.massemail": ApiMassemailMassemail;
             "api::navigation.navigation": ApiNavigationNavigation;
             "api::order.order": ApiOrderOrder;
             "api::product.product": ApiProductProduct;
+            "api::promocode.promocode": ApiPromocodePromocode;
             "api::timetable.timetable": ApiTimetableTimetable;
             "admin::permission": AdminPermission;
             "admin::user": AdminUser;

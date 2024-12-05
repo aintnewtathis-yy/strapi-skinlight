@@ -27,5 +27,8 @@
   },
   "strapi": {
     "uuid": "0bf7a8e3-f9ae-418d-9a59-9ce8b153a5f0"
+  },
+  "devDependencies": {
+    "xlsx": "^0.18.5"
   }
 }

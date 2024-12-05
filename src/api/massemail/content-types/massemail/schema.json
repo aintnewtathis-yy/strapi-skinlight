@@ -1,0 +1,19 @@
+{
+  "kind": "collectionType",
+  "collectionName": "massemails",
+  "info": {
+    "singularName": "massemail",
+    "pluralName": "massemails",
+    "displayName": "Почты для рассылки",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "emails_richtext": {
+      "type": "richtext"
+    }
+  }
+}

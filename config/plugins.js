@@ -29,8 +29,8 @@ module.exports = ({ env }) => ({
                 },
             },
             settings: {
-                defaultFrom: "noreply@mail.ru",
-                defaultReplyTo: "noreply@mail.ru",
+                defaultFrom: env("SMTP_HOST", "noreply@mail.ru"),
+                defaultReplyTo: env("SMTP_HOST", "noreply@mail.ru"),
             },
         },
     },

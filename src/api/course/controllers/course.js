@@ -76,8 +76,8 @@ module.exports = createCoreController("api::course.course", ({ strapi }) => ({
                 .plugin("email")
                 .service("email")
                 .send({
-                    to: "vyshyvanovilya@gmail.com",
-                    from: "1loso@mail.ru",
+                    to: strapi.config.get('server.app.ADMIN_EMAIL', '1loso@mail.ru'),
+                    from: strapi.config.get('server.app.FROM_EMAIL', '1loso@mail.ru'),
                     subject: "Новая заявка на курс",
                     text: "Новая заявка на курс",
                     html: `

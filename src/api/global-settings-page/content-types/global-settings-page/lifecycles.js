@@ -20,9 +20,6 @@ module.exports = {
                 ),
         );
 
-        console.log(publishedProducts.length);
-        console.log(draftProducts.length);
-
         const allFilled = Boolean(
             data.exchangeRate_ella &&
                 data.exchangeRate_perron &&
