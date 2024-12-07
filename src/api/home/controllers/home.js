@@ -38,6 +38,8 @@ module.exports = createCoreController("api::home.home", ({ strapi }) => ({
                         "shownLine.products.brand.seo",
                         "shownLine.shownOnBrand",
                         "shownLine.shownOnBrand.seo",
+                        "shownLine.brand",
+                        "shownLine.brand.seo",
                         "heroSlider",
                         "heroSlider.image",
                         "heroSlider.imageMobile",

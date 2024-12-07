@@ -10,8 +10,8 @@ module.exports = createCoreController("api::product.product", ({ strapi }) => ({
             const brands = await strapi.documents("api::brand.brand").findMany({
                 filters: {
                     products: {
-                        $notNull: true
-                    }
+                        $notNull: true,
+                    },
                 },
                 populate: ["seo"],
                 status: "published",
@@ -260,6 +260,9 @@ module.exports = createCoreController("api::product.product", ({ strapi }) => ({
                         "brand.seo",
                         "crosssales",
                         "crosssales.thumbnail",
+                        "crosssales.seo",
+                        "crosssales.brand",
+                        "crosssales.brand.seo",
                         "seo",
                         "seo.image",
                         "thumbnail",
@@ -278,7 +281,13 @@ module.exports = createCoreController("api::product.product", ({ strapi }) => ({
                                 },
                             },
                         },
-                        populate: ["seo", "thumbnail"],
+                        populate: [
+                            "seo",
+                            "seo.image",
+                            "thumbnail",
+                            "brand",
+                            "brand.seo",
+                        ],
                         limit: 8,
                         status: "published",
                     });
