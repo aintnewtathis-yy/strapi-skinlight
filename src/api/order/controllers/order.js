@@ -34,6 +34,7 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
                 data: {
                     orderStatus: "Ожидается оплата",
                     total: data.total,
+                    discount: data.discount,
                     orderId: data.orderId,
                     products: data.products,
                     address: data.userData.address,
@@ -43,6 +44,7 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
                     email: data.userData.email,
                     phone: data.userData.phone,
                     promocode: data.promocode,
+                    isMaster: data.userData.isMaster,
                 },
                 status: "published",
             });
@@ -110,8 +112,14 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
                         .plugin("email")
                         .service("email")
                         .send({
-                            to: strapi.config.get('server.app.ADMIN_EMAIL', '1loso@mail.ru'),
-                            from: strapi.config.get('server.app.FROM_EMAIL', '1loso@mail.ru'),
+                            to: strapi.config.get(
+                                "server.app.ADMIN_EMAIL",
+                                "1loso@mail.ru",
+                            ),
+                            from: strapi.config.get(
+                                "server.app.FROM_EMAIL",
+                                "1loso@mail.ru",
+                            ),
                             subject: "Новый заказ",
                             text: `Новый заказ - ${updatedOrder.orderId}`,
                             html: `
@@ -158,7 +166,10 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
                         .service("email")
                         .send({
                             to: updatedOrder.email,
-                            from: strapi.config.get('server.app.FROM_EMAIL', '1loso@mail.ru'),
+                            from: strapi.config.get(
+                                "server.app.FROM_EMAIL",
+                                "1loso@mail.ru",
+                            ),
                             subject: "Ваш заказ на skinlight.ru",
                             text: "Ваш заказ на skinlight.ru",
                             html: `
@@ -241,8 +252,14 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
                 .plugin("email")
                 .service("email")
                 .send({
-                    to: strapi.config.get('server.app.ADMIN_EMAIL', '1loso@mail.ru'),
-                    from: strapi.config.get('server.app.FROM_EMAIL', '1loso@mail.ru'),
+                    to: strapi.config.get(
+                        "server.app.ADMIN_EMAIL",
+                        "1loso@mail.ru",
+                    ),
+                    from: strapi.config.get(
+                        "server.app.FROM_EMAIL",
+                        "1loso@mail.ru",
+                    ),
                     subject: "Новое обращение",
                     text: "Новое обращение",
                     html: `

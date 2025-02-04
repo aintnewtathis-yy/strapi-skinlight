@@ -922,6 +922,8 @@ export interface ApiOrderOrder extends Struct.CollectionTypeSchema {
             "oneToOne",
             "api::promocode.promocode"
         >;
+        isMaster: Schema.Attribute.Boolean;
+        discount: Schema.Attribute.Integer;
         createdAt: Schema.Attribute.DateTime;
         updatedAt: Schema.Attribute.DateTime;
         publishedAt: Schema.Attribute.DateTime;
