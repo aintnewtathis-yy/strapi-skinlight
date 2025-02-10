@@ -5,11 +5,25 @@ module.exports = {
             .documents("api::product.product")
             .findMany({
                 populate: ["brand"],
+                filters: {
+                    brand: {
+                        $notNull: true,
+                    },
+                },
             });
+        let i = 0;
+        allProducts.forEach((product) => {
+            console.log(product.brand.name, i++);
+        });
         const publishedProducts = await strapi
             .documents("api::product.product")
             .findMany({
                 populate: ["brand"],
+                filters: {
+                    brand: {
+                        $notNull: true,
+                    },
+                },
                 status: "published",
             });
 
@@ -20,6 +34,8 @@ module.exports = {
                 ),
         );
 
+        console.log(publishedProducts.length);
+        console.log(draftProducts.length);
         const allFilled = Boolean(
             data.exchangeRate_ella &&
                 data.exchangeRate_perron &&
@@ -33,74 +49,61 @@ module.exports = {
 
         async function changePrices(products, statusTag) {
             if (products && allFilled) {
-                await Promise.all(
-                    products.map(async (product) => {
-                        if (product.priceEUR) {
-                            switch (product.brand.name) {
-                                case "Pandhy`s":
-                                    return strapi
-                                        .documents("api::product.product")
-                                        .update({
-                                            documentId: product.documentId,
-                                            data: {
-                                                priceRUB:
-                                                    product.priceEUR *
-                                                    data.exchangeRate_pandhys,
-                                                priceRUBOpt:
-                                                    product.priceEUR *
-                                                    data.exchangeRateOpt_pandhys,
-                                            },
-                                            status: statusTag,
-                                        });
-                                case "Ella Bache":
-                                    return strapi
-                                        .documents("api::product.product")
-                                        .update({
-                                            documentId: product.documentId,
-                                            data: {
-                                                priceRUB:
-                                                    product.priceEUR *
-                                                    data.exchangeRate_ella,
-                                                priceRUBOpt:
-                                                    product.priceEUR *
-                                                    data.exchangeRateOpt_ella,
-                                            },
-                                            status: statusTag,
-                                        });
-                                case "VAL MI":
-                                    return strapi
-                                        .documents("api::product.product")
-                                        .update({
-                                            documentId: product.documentId,
-                                            data: {
-                                                priceRUB:
-                                                    product.priceEUR *
-                                                    data.exchangeRate_valmi,
-                                                priceRUBOpt:
-                                                    product.priceEUR *
-                                                    data.exchangeRateOpt_valmi,
-                                            },
-                                            status: statusTag,
-                                        });
-                                case "Perron Rigot":
-                                    return strapi
-                                        .documents("api::product.product")
-                                        .update({
-                                            documentId: product.documentId,
-                                            data: {
-                                                priceRUB:
-                                                    product.priceEUR *
-                                                    data.exchangeRate_perron,
-                                                priceRUBOpt:
-                                                    product.priceEUR *
-                                                    data.exchangeRateOpt_perron,
-                                            },
-                                            status: statusTag,
-                                        });
-                            }
+                try {
+                    for (const product of products) {
+                        if (!product.priceEUR) continue; // Skip products without priceEUR
+                        if (!product.brand || !product.brand.name) {
+                            console.warn(
+                                `Product ${product.id} has no brand, skipping.`,
+                            );
+                            continue;
                         }
-                    }),
-                );
+
+                        let exchangeRate, exchangeRateOpt;
+                        switch (product.brand.name) {
+                            case "Pandhy's":
+                                exchangeRate = data.exchangeRate_pandhys;
+                                exchangeRateOpt = data.exchangeRateOpt_pandhys;
+                                break;
+                            case "Ella Bache":
+                                exchangeRate = data.exchangeRate_ella;
+                                exchangeRateOpt = data.exchangeRateOpt_ella;
+                                break;
+                            case "VAL MI":
+                                exchangeRate = data.exchangeRate_valmi;
+                                exchangeRateOpt = data.exchangeRateOpt_valmi;
+                                break;
+                            case "Perron Rigot":
+                                exchangeRate = data.exchangeRate_perron;
+                                exchangeRateOpt = data.exchangeRateOpt_perron;
+                                break;
+                            default:
+                                console.warn(
+                                    `Unknown brand: ${product.brand.name}, skipping.`,
+                                );
+                                continue;
+                        }
+
+                        await strapi.entityService.update(
+                            "api::product.product",
+                            product.id,
+                            {
+                                data: {
+                                    priceRUB: product.priceEUR * exchangeRate,
+                                    priceRUBOpt:
+                                        product.priceEUR * exchangeRateOpt,
+                                },
+                                status: statusTag, // Ensure this is a valid field in Strapi
+                            },
+                        );
+
+                        console.log(
+                            `Updated product ${product.id} (${product.brand.name})`,
+                        );
+                    }
+                } catch (error) {
+                    console.log(error, "promise all error");
+                }
             }
         }
 
@@ -109,7 +112,7 @@ module.exports = {
             await changePrices(draftProducts, "draft");
             console.log("prices updated!");
         } catch (error) {
-            console.log(error);
+            console.log(error, "end error");
         }
     },
 };

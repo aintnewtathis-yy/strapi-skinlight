@@ -301,4 +301,38 @@ module.exports = createCoreController("api::product.product", ({ strapi }) => ({
             ctx.throw(500, err);
         }
     },
+    async getAllProducts(ctx) {
+        try {
+            const products = await strapi
+                .documents("api::product.product")
+                .findMany({
+                    populate: ["brand", "brand.seo", "seo"],
+                    fields: ["name", "updatedAt"],
+                    status: "published",
+                });
+
+            const courses = await strapi
+                .documents("api::course.course")
+                .findMany({
+                    populate: ["seo"],
+                    fields: ["title", "updatedAt"],
+                    status: "published",
+                });
+            const brands = await strapi
+                .documents("api::brand.brand")
+                .findMany({
+                    populate: ["seo"],
+                    fields: ["name", "updatedAt"],
+                    status: "published",
+                });
+
+            return {
+                products,
+                courses,
+                brands
+            };
+        } catch (err) {
+            ctx.throw(500, err);
+        }
+    },
 }));

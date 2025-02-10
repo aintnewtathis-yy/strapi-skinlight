@@ -163,33 +163,6 @@ export interface ComponentsHeaderLink extends Struct.ComponentSchema {
     };
 }
 
-export interface BrandComponentsBrandHero extends Struct.ComponentSchema {
-    collectionName: "components_brand_components_brand_heroes";
-    info: {
-        displayName: "brandHero";
-    };
-    attributes: {
-        title: Schema.Attribute.String;
-        description: Schema.Attribute.String;
-        image: Schema.Attribute.Media<"images">;
-    };
-}
-
-export interface BrandComponentsBrandAbout extends Struct.ComponentSchema {
-    collectionName: "components_brand_components_brand_abouts";
-    info: {
-        displayName: "brandAbout";
-        description: "";
-    };
-    attributes: {
-        title: Schema.Attribute.String;
-        miniTitle: Schema.Attribute.String;
-        image: Schema.Attribute.Media<"images">;
-        descriptionTitle: Schema.Attribute.Text;
-        descriptionText: Schema.Attribute.RichText;
-    };
-}
-
 export interface ComponentsBaseLink extends Struct.ComponentSchema {
     collectionName: "components_components_base_links";
     info: {
@@ -254,6 +227,33 @@ export interface ComponentsBaseFooterColumn extends Struct.ComponentSchema {
     };
 }
 
+export interface BrandComponentsBrandHero extends Struct.ComponentSchema {
+    collectionName: "components_brand_components_brand_heroes";
+    info: {
+        displayName: "brandHero";
+    };
+    attributes: {
+        title: Schema.Attribute.String;
+        description: Schema.Attribute.String;
+        image: Schema.Attribute.Media<"images">;
+    };
+}
+
+export interface BrandComponentsBrandAbout extends Struct.ComponentSchema {
+    collectionName: "components_brand_components_brand_abouts";
+    info: {
+        displayName: "brandAbout";
+        description: "";
+    };
+    attributes: {
+        title: Schema.Attribute.String;
+        miniTitle: Schema.Attribute.String;
+        image: Schema.Attribute.Media<"images">;
+        descriptionTitle: Schema.Attribute.Text;
+        descriptionText: Schema.Attribute.RichText;
+    };
+}
+
 declare module "@strapi/strapi" {
     export module Public {
         export interface ComponentSchemas {
@@ -269,13 +269,13 @@ declare module "@strapi/strapi" {
             "components.product-list": ComponentsProductList;
             "components.hero-slider": ComponentsHeroSlider;
             "components.header-link": ComponentsHeaderLink;
-            "brand-components.brand-hero": BrandComponentsBrandHero;
-            "brand-components.brand-about": BrandComponentsBrandAbout;
             "components-base.link": ComponentsBaseLink;
             "components-base.label-with-boolean": ComponentsBaseLabelWithBoolean;
             "components-base.footer-socials": ComponentsBaseFooterSocials;
             "components-base.footer-navigation": ComponentsBaseFooterNavigation;
             "components-base.footer-column": ComponentsBaseFooterColumn;
+            "brand-components.brand-hero": BrandComponentsBrandHero;
+            "brand-components.brand-about": BrandComponentsBrandAbout;
         }
     }
 }

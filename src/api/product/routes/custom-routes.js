@@ -15,5 +15,10 @@ module.exports = {
       path: "/products/getProduct", 
       handler: "product.getProduct",
     },
+    {
+      method: "GET",
+      path: "/products/sitemap", 
+      handler: "product.getAllProducts",
+    },
   ],
 };
