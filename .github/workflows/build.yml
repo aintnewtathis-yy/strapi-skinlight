@@ -47,7 +47,7 @@ jobs:
       - name: Deploy on CapRover
         uses: caprover/deploy-from-github@v1.1.2
         with:
-          server: https://cr.ylean.ru
+          server: https://cr.skinlight.ru
           app: 'strapi-core'
           token: ${{ secrets.APP_TOKEN }}
           image: 'ghcr.io/aintnewtathis-yy/strapi-skinlight:latest'
