@@ -52,7 +52,6 @@ module.exports = createCoreController("api::brand.brand", ({ strapi }) => ({
                 status: "published",
             });
 
-        console.log(products);
 
         if (!brand) {
             return ctx.notFound("Brand not found");

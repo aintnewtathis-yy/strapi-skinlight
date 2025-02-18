@@ -155,7 +155,6 @@ const service = ({ strapi }) => ({
 
         try {
             data.forEach(async (row) => {
-                console.log(row);
                 const category = await strapi.documents('api::category.category').create({
                     data: {
                         name: row.name,
@@ -178,8 +177,6 @@ const service = ({ strapi }) => ({
         const { data } = ctx.request.body;
         try {
             data.forEach(async (row) => {
-                console.log(row);
-
                 const line = await strapi.documents('api::line.line').create({
                     data: {
                         name: row.name,
@@ -292,7 +289,6 @@ const service = ({ strapi }) => ({
                 if (!product.line) {
                     const line = await getLine(row.line);
                     const array = [line];
-                    console.log(array);
                     const updatedProduct = await strapi.documents('api::product.product').update({
                         documentId: product.documentId,
                         data: {

@@ -12,8 +12,6 @@ module.exports = createCoreController(
         async getDiscount(ctx) {
             const { promocodeName } = ctx.query;
 
-            console.log(promocodeName);
-
             if (!promocodeName) {
                 return ctx.badRequest("Promocode name is required");
             }
@@ -28,8 +26,6 @@ module.exports = createCoreController(
                     },
                     status: "published",
                 });
-
-            console.log(promocode);
 
             if (!promocode) {
                 return ctx.notFound("Promocode not found");

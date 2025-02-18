@@ -201,7 +201,7 @@ module.exports = createCoreController("api::order.order", ({ strapi }) => ({
         </table>
         <p style="text-align: center; margin-top: 20px; font-size: 16px; color: #4A3931;">Спасибо за заказ! Менеджер свяжется с вами в ближайшее время.</p>
         <div style="text-align: center; margin-top: 20px;">
-            <a href="https://sveltekit-app.cr.ylean.ru/order/${updatedOrder.documentId}" style="display: inline-block; padding: 12px 24px; font-size: 16px; color: #FFFFFF; background-color: #4A3931; border-radius: 4px; text-decoration: none; font-weight: bold; transition: background-color 0.3s;">
+            <a href="https://skinlight.ru/order/${updatedOrder.documentId}" style="display: inline-block; padding: 12px 24px; font-size: 16px; color: #FFFFFF; background-color: #4A3931; border-radius: 4px; text-decoration: none; font-weight: bold; transition: background-color 0.3s;">
                 Перейти к заказу
             </a>
         </div>

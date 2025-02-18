@@ -1,7 +1,5 @@
 module.exports = (plugin) => {
     plugin.controllers.user.updateMe = async (ctx) => {
-        console.log(ctx.state.user);
-        console.log(ctx.request.body);
         if (!ctx.state.user || !ctx.state.user.id) {
             return (ctx.response.status = 401);
         }

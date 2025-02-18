@@ -11,10 +11,6 @@ module.exports = {
                     },
                 },
             });
-        let i = 0;
-        allProducts.forEach((product) => {
-            console.log(product.brand.name, i++);
-        });
         const publishedProducts = await strapi
             .documents("api::product.product")
             .findMany({
@@ -34,8 +30,6 @@ module.exports = {
                 ),
         );
 
-        console.log(publishedProducts.length);
-        console.log(draftProducts.length);
         const allFilled = Boolean(
             data.exchangeRate_ella &&
                 data.exchangeRate_perron &&
@@ -97,9 +91,6 @@ module.exports = {
                             },
                         );
 
-                        console.log(
-                            `Updated product ${product.id} (${product.brand.name})`,
-                        );
                     }
                 } catch (error) {
                     console.log(error, "promise all error");
